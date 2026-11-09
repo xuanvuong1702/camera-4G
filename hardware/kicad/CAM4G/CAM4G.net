@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\vuong\\Documents\\deepseek-harness\\default-workspace\\4g-camera\\hardware\\kicad\\CAM4G\\CAM4G.kicad_sch")
-		(date "2026-11-09T12:40:13")
+		(date "2026-11-09T12:42:14")
 		(tool "Eeschema 10.0.7")
 		(sheet
 			(number "1")
@@ -4267,11 +4267,11 @@
 		(comp
 			(ref "U1")
 			(value "Core1106")
-			(footprint "Core1106:Core1106-SMT")
+			(footprint "Core1106-PCB:Core1106-SMT")
 			(description "Core1106")
 			(fields
 				(field
-					(name "Footprint") "Core1106:Core1106-SMT")
+					(name "Footprint") "Core1106-PCB:Core1106-SMT")
 				(field
 					(name "Datasheet")
 				)
@@ -4806,9 +4806,6 @@
 						)
 						(pin
 							(num "8")
-						)
-						(pin
-							(num "9")
 						)
 					)
 				)
@@ -5384,11 +5381,6 @@
 					(num "8")
 					(name "VOS")
 					(type "input")
-				)
-				(pin
-					(num "9")
-					(name "EP")
-					(type "power_in")
 				)
 			)
 		)
@@ -8108,12 +8100,6 @@
 				(pin "6")
 				(pinfunction "STOP_6")
 				(pintype "input")
-			)
-			(node
-				(ref "U3")
-				(pin "9")
-				(pinfunction "EP_9")
-				(pintype "power_in")
 			)
 			(node
 				(ref "U4")

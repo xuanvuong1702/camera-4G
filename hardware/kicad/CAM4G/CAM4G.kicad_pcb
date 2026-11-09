@@ -9507,7 +9507,7 @@
 				)
 			)
 		)
-		(property "Value" "1.2k"
+		(property "Value" "2.4k"
 			(at 0 1.43 0)
 			(layer "F.Fab")
 			(uuid "cc1ef3e2-3b37-4a34-a773-b5aa7348816d")
@@ -17705,7 +17705,7 @@
 				)
 			)
 		)
-		(attr smd)
+		(attr smd dnp)
 		(duplicate_pad_numbers_are_jumpers no)
 		(fp_line
 			(start -0.14058 -0.51)

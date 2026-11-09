@@ -2249,10 +2249,7 @@
 				(name "VOS" (effects (font (size 1.27 1.27))))
 				(number "8" (effects (font (size 1.27 1.27))))
 			)
-			(pin power_in line (at 15.24 -1.27 180) (length 5.08)
-				(name "EP" (effects (font (size 1.27 1.27))))
-				(number "9" (effects (font (size 1.27 1.27))))
-			)
+			
 		)
 	)
 (symbol "CAM4G:INA226"
@@ -9293,7 +9290,6 @@
 		(pin "6" (uuid "0542a6f8-fecf-4762-af31-f58f6d454904"))
 		(pin "7" (uuid "87fba402-78e7-43b6-876c-0e850e8ce2db"))
 		(pin "8" (uuid "421916fa-d188-4f85-a722-b342f9e60a3a"))
-		(pin "9" (uuid "3a9cfafa-d616-4456-b98d-1669d75ae49b"))
 		(instances
 			(project ""
 				(path "/61fdeb8d-5442-41ae-99a5-d057c2041497"
@@ -9335,10 +9331,7 @@
 		(effects (font (size 1.0 1.0)) (justify left bottom))
 		(uuid "270deb46-6163-49dd-8dd1-8a4da212c325")
 	)
-	(label "GND" (at 675.640 280.670 0)
-		(effects (font (size 1.0 1.0)) (justify left bottom))
-		(uuid "2ac05b8a-4e56-42ea-8c7c-4167c68b0814")
-	)
+	
 	(symbol
 		(lib_id "CAM4G:CN3058E")
 		(at 119.38 449.58 0)
