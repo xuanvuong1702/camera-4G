@@ -25,19 +25,19 @@ Tài liệu gửi xưởng cho lô mẫu 5 bộ.
 | Độ dày | 1,6 mm |
 | Đồng | 1 oz |
 | Bề mặt | ENIG |
-| Min trace | 0,15 mm (stub MIPI 0,1 mm) |
-| Min clearance | **0,14 mm** (JLCPCB min 0,127) |
+| Min trace | **0,10 mm** (JLCPCB 4 lớp min 0,09) |
+| Min clearance | **0,09 mm** (JLCPCB 4 lớp min 0,09) |
 | Via | 0,45 mm / khoan 0,3 mm |
-| Lỗ khoan | **(4,0; 24,1)**, (95,5), (5,65), (95,65) |
+| Lỗ khoan | **(3,0; 24,1)**, (95,5), (5,65), (95,65) |
 
 ### Stackup
 
 ```
 F.Cu   tín hiệu
 prepreg 0.1 mm
-In1.Cu GND plane (toàn board)
+In1.Cu GND plane (toàn board, không route tín hiệu)
 core 1.0 mm
-In2.Cu VBAT plane (toàn board)
+In2.Cu VBAT plane (toàn board, không route tín hiệu)
 prepreg 0.1 mm
 B.Cu   tín hiệu + zone +5V_SYS
 ```
@@ -56,7 +56,7 @@ B.Cu   tín hiệu + zone +5V_SYS
 ## 4. Ghi chú lắp ráp
 
 1. **U1 Core1106**: module stamp-hole 112 pad, stencil + reflow, không hàn tay.
-2. **U2 TPS61088**: VQFN-20 3,5×3,5; pad 0,23×0,6 (giảm 0,01 so với TI để đủ clearance), EP 2,05; cần via thermal dưới EP.
+2. **U2 TPS61088**: VQFN-20 3,5×3,5; **L1 đặt sát U2 (7,5 mm)**, mạch vòng boost ngắn; pad 0,23×0,6 (giảm 0,01 so với TI để đủ clearance), EP 2,05; cần via thermal dưới EP.
 3. **U3 TPS62840**: **SON DLC 1,5×2 mm, 8 pad 0,6×0,25, pitch 0,5, KHÔNG có pad EP**. Không dùng footprint WSON 2×2.
 4. **U5 CN3058E**: SOIC-8 có pad EP — cần dán và tản nhiệt.
 5. **J2**: **JST VH 3,96 mm** (10 A), không phải XH.

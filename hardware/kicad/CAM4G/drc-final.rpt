@@ -1,21 +1,8 @@
 ** Drc report for CAM4G.kicad_pcb **
-** Created on 2026-11-09T12:39:59 **
+** Created on 2026-11-09T13:03:11 **
 ** Report includes: Errors, Warnings, Exclusions **
 
-** Found 16 DRC violations **
-[lib_footprint_issues]: The current configuration does not include the footprint library 'Core1106'
-    Local override; error
-    @(30.0000 mm, 35.0000 mm): Footprint U1
-[lib_footprint_issues]: The current configuration does not include the footprint library 'CAM4G'
-    Local override; error
-    @(66.3700 mm, 56.2100 mm): Footprint U2
-[lib_footprint_issues]: The current configuration does not include the footprint library 'CAM4G'
-    Local override; error
-    @(77.8000 mm, 54.9400 mm): Footprint U3
-[silk_edge_clearance]: Silkscreen clipped by board edge
-    Rule: board setup constraints silk; warning
-    @(0.0000 mm, 0.0000 mm): Segment on Edge.Cuts
-    @(5.5000 mm, 0.1800 mm): Reference field of L1
+** Found 12 DRC violations **
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
     @(0.0000 mm, 70.0000 mm): Segment on Edge.Cuts
@@ -26,12 +13,8 @@
     @(1.3400 mm, 19.8400 mm): Segment of J2 on F.Silkscreen
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
-    @(13.2360 mm, 19.5060 mm): Reference field of U1
-    @(16.4998 mm, 20.0000 mm): Pad 112 [/GND] of U1 on F.Cu
-[silk_over_copper]: Silkscreen clipped by solder mask
-    Local override; warning
-    @(77.8000 mm, 54.9400 mm): Reference field of U3
-    @(78.4500 mm, 55.6900 mm): Pad 5 [/VSET_BUCK] of U3 on F.Cu
+    @(66.3700 mm, 56.2100 mm): Reference field of U2
+    @(66.3700 mm, 56.2100 mm): Pad 21 [/GND] of U2 on F.Cu
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(77.8000 mm, 54.9400 mm): Reference field of U3
@@ -47,7 +30,7 @@
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(77.8000 mm, 54.9400 mm): Reference field of U3
-    @(77.1500 mm, 55.6900 mm): Pad 4 [/BUCK_EN] of U3 on F.Cu
+    @(78.4500 mm, 54.1900 mm): Pad 8 [/+3V3] of U3 on F.Cu
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(77.8000 mm, 54.9400 mm): Reference field of U3
@@ -59,11 +42,15 @@
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(77.8000 mm, 54.9400 mm): Reference field of U3
-    @(78.4500 mm, 54.1900 mm): Pad 8 [/+3V3] of U3 on F.Cu
+    @(78.4500 mm, 55.6900 mm): Pad 5 [/VSET_BUCK] of U3 on F.Cu
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
-    @(66.3700 mm, 56.2100 mm): Reference field of U2
-    @(66.3700 mm, 56.2100 mm): Pad 21 [/GND] of U2 on F.Cu
+    @(77.8000 mm, 54.9400 mm): Reference field of U3
+    @(77.1500 mm, 55.6900 mm): Pad 4 [/BUCK_EN] of U3 on F.Cu
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(13.2360 mm, 19.5060 mm): Reference field of U1
+    @(16.4998 mm, 20.0000 mm): Pad 112 [/GND] of U1 on F.Cu
 
 ** Found 0 unconnected pads **
 

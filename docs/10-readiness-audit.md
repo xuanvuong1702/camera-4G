@@ -136,3 +136,22 @@ Khoảng cách L1–U2 ≈ **80 mm**. Với boost 600 kHz, 5 V/3 A, vòng SW dà
 3. Sau đó route lại vùng nguồn và kiểm tra DRC.
 
 Các mục khác đã xong: parity 0, CAM4G lib, courtyard, filter, description.
+
+
+---
+
+## 13. Sửa placement L1 và plane (vòng 42)
+
+| Hạng mục | Trước | Sau |
+|---|---|---|
+| L1 | (5,41; 5,41) — cách U2 80 mm | **(57,5; 56,2)** — cách U2 ~7,5 mm |
+| In1 | plane GND nhưng router vẫn đi tín hiệu | **plane**, router chỉ dùng F.Cu/B.Cu |
+| In2 | plane VBAT bị short bởi track ILIM | **plane**, không còn track nội lớp |
+| Track | 0,1 mm | 0,1 mm (JLCPCB 4 lớp min 0,09) |
+| Clearance | 0,14 | **0,09** (JLCPCB 4 lớp min 0,09) |
+| DRC | — | **0 unconnected, 0 short, 0 clearance**; chỉ 10 silk_over_copper + 2 silk_edge |
+| Lỗ khoan | (4,0; 24,1) | **(3,0; 24,1)** — tránh track RESET_N |
+
+Cách làm: đánh dấu In1/In2 là plane trong DSN trước khi route, nên Freerouting chỉ dùng 2 lớp ngoài; sau đó mới thêm plane và via.
+
+**Còn lại:** route tay MIPI + impedance control, in 1:1.

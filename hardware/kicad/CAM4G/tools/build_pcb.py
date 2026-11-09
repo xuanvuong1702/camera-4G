@@ -290,7 +290,7 @@ ANCHOR = {
     "U6": (58, 15), "J11": (66, 38), "BT1": (68, 15),
 }
 GROUPS = {
-    "U2": ["C1", "C2", "C3", "C6", "C7", "C9", "C4", "R1", "R2", "R3", "R4", "R5", "C5", "C8", "L1"],
+    "U2": ["L1", "C1", "C4", "C9", "C2", "C3", "C6", "C7", "R1", "R2", "R3", "R4", "R5", "C5", "C8"],
     "U3": ["C10", "C11", "R6", "L2"],
     "U5": ["C13", "C14", "R10", "R13", "R11", "R12", "D1", "D2", "NTC1"],
     "U4": ["R7", "C12", "R8", "R9"],
@@ -425,7 +425,7 @@ for ref in ["J6", "J7", "J8", "J9", "J10"]:
         x += w + 1.2
 
 # 2b. preferred positions for critical parts
-PREF = {"R5": (64.0, 51.5), "C8": (69.0, 51.5), "D6": (66.0, 11.0)}
+PREF = {"L1": (58.0, 56.5), "R5": (64.0, 51.5), "C8": (69.0, 51.5), "D6": (66.0, 11.0)}
 for ref, (px, py) in PREF.items():
     if ref in comps and ref not in placed:
         xx, yy = find_spot(ref, 0, px, py, radius=5)
