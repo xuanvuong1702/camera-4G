@@ -75,3 +75,24 @@
 | 6 | Sạc 1 A tỏa ~1,4 W trong vỏ kín | **Giảm còn 0,5 A**: R10 1,2 kΩ → **2,4 kΩ**, tổn hao ~0,7 W |
 | 7 | U3 symbol còn pin 9 (EP) | **Chưa sửa** — DLC không có EP; cần xóa pin 9 khỏi symbol (v6) |
 | 8 | MIPI/vòng boost vẫn autoroute | **Chưa sửa** — cần route tay + impedance control |
+
+
+---
+
+## 10. Chốt lại sau khi xóa U3 pin 9
+
+| Hạng mục | Kết quả |
+|---|---|
+| U3 netlist | **8 chân** (1–8), không còn pin 9 EP |
+| net_conflict | **0** |
+| footprint_symbol_mismatch | **0** |
+| R10 | **2,4 kΩ** → sạc 0,5 A |
+| C8 | DNP đồng bộ schematic/board |
+| Lỗ khoan | (4,0; 24,1) — cách J2 0,6 mm |
+| Zone B.Cu | VBAT priority 1, +5V priority 0 |
+| ERC | 0 lỗi, 6 cảnh báo (2 lib CAM4G, 4 symbol đã sửa) |
+| DRC strict | 0 unconnected/short/clearance; 2 lib issues, 1 filter, 1 field, 13 silk |
+| 3D | CAM4G.step (4,9 MB) |
+| In 1:1 | CAM4G-1to1.pdf |
+
+**Chưa làm:** route tay vòng boost và MIPI, impedance control, tạo lib CAM4G.pretty.
