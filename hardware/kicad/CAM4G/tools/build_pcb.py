@@ -54,7 +54,11 @@ for c in find(tree, 'components'):
             if isinstance(x, list) and x and x[0] == 'ref':
                 ref = x[1]
         if ref:
-            comps[ref] = {}
+            val = None
+            for x in comp:
+                if isinstance(x, list) and x and x[0] == 'value':
+                    val = x[1]
+            comps[ref] = {'value': val} if val else {}
 
 nets = {}
 for n in find(tree, 'nets'):
@@ -75,16 +79,26 @@ for n in find(tree, 'nets'):
             if r and p:
                 nets.setdefault(r, {})[p] = name
 
+# SOT-23 symbols use letter pin names; map them to pad numbers.
+LETTER_TO_PAD = {
+    'Q1': {'G': '1', 'S': '2', 'D': '3'},
+    'Q2': {'B': '1', 'E': '2', 'C': '3'},
+    'Q3': {'G': '1', 'S': '2', 'D': '3'},
+}
+for _ref, _map in LETTER_TO_PAD.items():
+    if _ref in nets:
+        nets[_ref] = {_map.get(k, k): v for k, v in nets[_ref].items()}
+
 # ---------- footprint map ----------
 FP = {
     "U1": ("CORE", "Core1106-SMT"),
     "U2": ("CUSTOM", "VQFN20_3.5"),
-    "U3": ("Package_SON", "Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm"),
+    "U3": ("CUSTOM_DLC", "DLC0008B"),
     "U4": ("Package_SO", "MSOP-10_3x3mm_P0.5mm"),
     "U5": ("Package_SO", "SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm"),
     "U6": ("Package_SO", "TSSOP-20_4.4x6.5mm_P0.65mm"),
     "J1": ("Connector_USB", "USB_C_Receptacle_HRO_TYPE-C-31-M-12"),
-    "J2": ("Connector_JST", "JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"),
+    "J2": ("Connector_JST", "JST_VH_B2P-VH_1x02_P3.96mm_Vertical"),
     "J3": ("Connector_FFC-FPC", "Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal"),
     "J4": ("Connector_Card", "microSD_HC_Hirose_DM3AT-SF-PEJM5"),
     "J6": ("Connector_JST", "JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"),
@@ -107,7 +121,7 @@ FP = {
     "D6": ("Diode_SMD", "D_SOD-323"),
     "L1": ("Inductor_SMD", "L_Bourns-SRN8040_8x8.15mm"),
     "L2": ("Inductor_SMD", "L_Bourns-SRN4018"),
-    "R7": ("Resistor_SMD", "R_1206_3216Metric"),
+    "R7": ("Resistor_SMD", "R_2512_6332Metric"),
     "TP1": ("TestPoint", "TestPoint_Pad_1.5x1.5mm"),
     "TP2": ("TestPoint", "TestPoint_Pad_1.5x1.5mm"),
 }
@@ -154,7 +168,7 @@ edge(W, H, 0, H)
 edge(0, H, 0, 0)
 
 # mounting holes as board cutouts
-for (mx, my) in [(12, 5), (W - 5, 5), (5, H - 5), (W - 5, H - 5)]:
+for (mx, my) in [(3.5, 23.2), (W - 5, 5), (5, H - 5), (W - 5, H - 5)]:
     c = pcbnew.PCB_SHAPE(board)
     c.SetShape(pcbnew.SHAPE_T_CIRCLE)
     c.SetCenter(V(MM(mx), MM(my)))
@@ -180,7 +194,7 @@ def make_vqfn():
     fp.SetValue("TPS61088")
     # pads 0.28 x 0.8, pitch 0.5, body 3.5
     pitch = 0.5
-    padw, padh = 0.24, 0.6
+    padw, padh = 0.23, 0.6
     cx = 0.0
     # left side pins 1-5 top to bottom: y from -1 to +1
     num = 1
@@ -241,6 +255,33 @@ def make_vqfn():
     return fp
 
 
+
+
+def make_dlc():
+    """TI DLC0008B: 8 pads 0.6 x 0.25, pitch 0.5, columns at +/-0.65, no EP."""
+    fp = pcbnew.FOOTPRINT(board)
+    fp.SetReference("U3")
+    fp.SetValue("TPS62840")
+    num = 1
+    for x in (-0.65, 0.65):
+        ys = (-0.75, -0.25, 0.25, 0.75) if x < 0 else (0.75, 0.25, -0.25, -0.75)
+        for y in ys:
+            pad = pcbnew.PAD(fp)
+            pad.SetShape(pcbnew.PAD_SHAPE_RECT)
+            pad.SetSize(V(MM(0.6), MM(0.25)))
+            pad.SetPosition(V(MM(x), MM(y)))
+            pad.SetNumber(str(num))
+            fp.Add(pad)
+            num += 1
+    for pad in fp.Pads():
+        pad.SetAttribute(pcbnew.PAD_ATTRIB_SMD)
+        ls = pcbnew.LSET()
+        ls.AddLayer(pcbnew.F_Cu)
+        ls.AddLayer(pcbnew.F_Paste)
+        ls.AddLayer(pcbnew.F_Mask)
+        pad.SetLayerSet(ls)
+    return fp
+
 # ---------- placement ----------
 placed_boxes = []
 MARGIN = 1.5
@@ -264,6 +305,8 @@ def load_fp(ref):
     lib, name = FP[ref]
     if lib == "CUSTOM":
         return make_vqfn()
+    if lib == "CUSTOM_DLC":
+        return make_dlc()
     path = CORE_FP if lib == "CORE" else os.path.join(FPDIR, lib + ".pretty")
     fp = pcbnew.FootprintLoad(path, name)
     if fp is None:
@@ -313,6 +356,9 @@ def place_center(ref, x, y, rot=0, edge=False):
     if not is_free(x, y, w, h, edge):
         return False
     fp.SetReference(ref)
+    _v = comps.get(ref, {}).get('value')
+    if _v:
+        fp.SetValue(_v)
     fp.SetPosition(V(MM(x - ox), MM(y - oy)))
     fp.SetOrientationDegrees(rot)
     board.Add(fp)

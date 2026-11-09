@@ -119,3 +119,17 @@ APN theo nhà mạng: Viettel `v-internet`, Vinaphone `m3-world`, Mobifone `m-wa
 | 2 | UART 3 Mbps giới hạn throughput | 720p 1–2 Mbps vẫn đủ; giảm fps nếu cần |
 | 3 | Cat-1 độ trễ cao hơn Cat-4 | Chấp nhận cho prototype |
 | 4 | Nguồn breakout yếu | Tụ bulk + boost 3 A hiện có |
+
+
+---
+
+## 7. Yêu cầu bắt buộc cho breakout (bổ sung v5)
+
+EC200U-EU có **VBAT 3,3–4,3 V** và **I/O 1,8 V**, trong khi J11 cấp 5 V và UART 3,3 V.
+
+Breakout **phải** có:
+1. **Buck/LDO 5 V → 3,8 V** đủ ≥ 0,6 A đỉnh.
+2. **Level shifter 1,8 V ↔ 3,3 V** cho TXD/RXD (và PWRKEY/RESET nếu cần).
+3. Tụ bulk ≥ 470 µF trên đầu vào 5 V.
+
+Nếu breakout không có hai thứ trên, phải thêm mạch hạ áp + level shifter lên board mẹ.

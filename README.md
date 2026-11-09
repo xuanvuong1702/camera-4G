@@ -10,7 +10,7 @@ Camera ngoài trời, pin LFP 10 Ah, 4G, hồng ngoại, phát hiện chuyển �
 |---|---|
 | Yêu cầu & kiến trúc | Đã chốt |
 | Schematic | **ERC 0 lỗi, 0 cảnh báo** |
-| PCB | 100×70 mm, 4 lớp, **DRC 0 unconnected / 0 short / 0 clearance** |
+| PCB | 100×70 mm, 4 lớp, 3 plane (GND/VBAT/+5V), **DRC 0 unconnected / 0 short / 0 clearance** — chỉ còn silk |
 | Gerber + drill | Đã xuất, đóng gói `gerber/CAM4G-fab.zip` |
 | BOM | 81 dòng, value đúng; kèm BOM mua hàng có MPN |
 | CPL | 79 dòng (TP1/TP2 không paste — đúng) |
@@ -28,6 +28,7 @@ Camera ngoài trời, pin LFP 10 Ah, 4G, hồng ngoại, phát hiện chuyển �
 - **Hai chế độ ngủ**: "canh gác nhanh" (~40–75 ngày, nhận lệnh 5–15 s) và "tiết kiệm tối đa" (nhiều tháng, chỉ PIR/lịch).
 - Sạc bị cấm khi nhiệt độ pin > 40 °C.
 - Board **100×70 mm** (80×55 không đủ chỗ cho 81 linh kiện).
+- **v5**: sửa U3 sang SON DLC, shunt 0,01 Ω, J2 JST VH 10 A, Q3 AO3400A, VBUS_DET đúng, Q1–Q3 đã nối.
 
 ## Cấu trúc
 

@@ -144,3 +144,22 @@ Nguyên nhân 2 điểm COMP chưa nối suốt các vòng trước: **zone VBAT
 - Gerber/BOM/CPL xuất lại; `gerber/CAM4G-fab.zip` 13 file
 
 Còn lại (thương mại): mã LCSC cho thụ động, model breakout EC200U, camera, pin, vỏ.
+
+---
+
+## 10. Sửa 6 lỗi chặn (v5)
+
+| # | Lỗi | Sửa |
+|---|---|---|
+| 1 | U3 TPS62840 dùng footprint WSON 2×2 thay vì **SON DLC 1,5×2** (8 pad 0,6×0,25, không EP) | Tạo footprint DLC đúng datasheet; board sẽ không khởi động nếu giữ lỗi cũ |
+| 2 | INA226 bão hoà: 0,05 Ω × 3 A = 150 mV > ±81,92 mV | Shunt **0,01 Ω** 2512 1 W → ±8,19 A |
+| 3 | Shunt 1,55 W ở 5,56 A; JST XH ~3 A | Shunt 2512 1 W; **J2 → JST VH 3,96 mm (10 A)** |
+| 4 | Q3 IRLZ44N (TO-220) trong SOT-23; **Q1/Q2/Q3 pad trống** do symbol chân chữ vs SOT-23 1/2/3 | Q3 → **AO3400A**; map chữ→số; modem power và IR giờ đã nối |
+| 5 | R34 lấy VBUS_DET từ +5V_SYS | Đổi nhãn schematic sang **VBUS_5V** |
+| 6 | Modem/camera chưa chốt ngoại vi | Ghi yêu cầu: breakout có **buck 3,8 V + level shifter 1,8↔3,3 V**; camera chốt pinout/PWDN |
+
+**Phát sinh:** toàn bộ track 0,15 mm kể cả nguồn → thêm plane **In1 GND, In2 VBAT, B.Cu +5V**.
+
+**DRC cuối:** 0 unconnected, 0 short, 0 clearance, 0 track width; chỉ còn 10 silk_over_copper + 5 silk_edge.
+
+**Còn lại:** chọn LCSC cho thụ động, chốt breakout EC200U/camera/pin/vỏ, MIPI chưa kiểm soát impedance.

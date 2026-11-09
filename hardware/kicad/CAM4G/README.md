@@ -9,7 +9,7 @@ Carrier board cho Core1106 + modem EC200U-EU. **Thiết kế đã route xong và
 | Schematic | Hoàn chỉnh — U1 + nguồn + connector + MCU |
 | ERC | **0 lỗi, 0 cảnh báo** |
 | PCB | 100 × 70 mm, 4 lớp, **81 footprint** |
-| Route | 1320 track + 182 via + zone VBAT B.Cu |
+| Route | 1278 track + 183 via + plane In1 GND / In2 VBAT / B.Cu +5V |
 | DRC | **0 unconnected, 0 short, 0 clearance, 0 track width, 0 copper edge** |
 | Lỗi còn lại | 4 silk_edge_clearance + 2 silk_over_copper (chỉ in lụa) |
 | Gerber | 28 file + drill, đóng gói `gerber/CAM4G-fab.zip` |
@@ -45,10 +45,10 @@ Carrier board cho Core1106 + modem EC200U-EU. **Thiết kế đã route xong và
 | Độ dày | 1,6 mm |
 | Đồng | 1 oz |
 | Bề mặt | ENIG |
-| Min trace | 0,15 mm |
-| Min clearance | 0,15 mm |
+| Min trace | 0,15 mm (stub 0,1 mm) |
+| Min clearance | 0,14 mm |
 | Via | 0,45 mm / khoan 0,3 mm |
-| Lỗ khoan | (5,3; 12,5), (95,5), (5,65), (95,65) |
+| Lỗ khoan | (3,5; 23,2), (95,5), (5,65), (95,65) |
 
 ## Các sửa đổi quan trọng
 
@@ -58,7 +58,8 @@ Carrier board cho Core1106 + modem EC200U-EU. **Thiết kế đã route xong và
 2. Footprint TPS61088 sửa theo land pattern TI RHL0020A: pad 0,24×0,6 tại ±1,525, EP 2,05.
 3. Pad góc U2 giảm 0,24 → 0,23 mm để đủ clearance 0,15 mm (lệch 0,01 mm so với TI).
 4. Lỗ khoan dời khỏi L1 và R21.
-5. Netclass clearance hạ 0,2 → 0,15 mm cho khớp track thực tế.
+5. Netclass clearance hạ 0,2 → 0,14 mm; min track 0,1 mm cho stub MIPI.
+6. U3 chuyển sang SON DLC 1,5×2 (datasheet); J2 JST VH 10 A; R7 0,01 Ω 2512; Q3 AO3400A; Q1–Q3 nối đúng chân; R34 → VBUS_5V.
 
 ## Quy trình dựng lại
 

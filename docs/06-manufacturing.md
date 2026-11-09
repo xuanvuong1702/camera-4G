@@ -1,4 +1,4 @@
-# Hồ sơ sản xuất — CAM4G v1
+# Hồ sơ sản xuất — CAM4G v5
 
 Tài liệu gửi xưởng cho lô mẫu 5 bộ.
 
@@ -8,11 +8,11 @@ Tài liệu gửi xưởng cho lô mẫu 5 bộ.
 
 | File | Vị trí |
 |---|---|
-| Gerber + drill | `hardware/kicad/CAM4G/gerber/` (28 file + `.drl` + `.gbrjob`) |
+| Gerber + drill | `hardware/kicad/CAM4G/gerber/CAM4G-fab.zip` (13 file) |
 | BOM | `hardware/kicad/CAM4G/CAM4G-bom.csv` |
-| CPL (toạ độ dán) | `hardware/kicad/CAM4G/CAM4G-cpl.csv` |
-| Bản vẽ xem trước | `hardware/kicad/CAM4G/CAM4G-pcb-preview.pdf` |
-| Schematic | `hardware/kicad/CAM4G/CAM4G-schematic-preview.pdf` |
+| BOM mua hàng (MPN) | `hardware/kicad/CAM4G/CAM4G-bom-procurement.csv` |
+| CPL | `hardware/kicad/CAM4G/CAM4G-cpl.csv` |
+| Xem trước | `CAM4G-pcb-preview.pdf`, `CAM4G-schematic-preview.pdf` |
 
 ---
 
@@ -25,57 +25,56 @@ Tài liệu gửi xưởng cho lô mẫu 5 bộ.
 | Độ dày | 1,6 mm |
 | Đồng | 1 oz |
 | Bề mặt | ENIG |
-| Min trace | 0,15 mm |
-| Min clearance | 0,15 mm |
+| Min trace | 0,15 mm (stub MIPI 0,1 mm) |
+| Min clearance | **0,14 mm** (JLCPCB min 0,127) |
 | Via | 0,45 mm / khoan 0,3 mm |
-| Màu mask | đen hoặc trắng (không ảnh hưởng) |
-| Silkscreen | trắng |
+| Lỗ khoan | (3,5; 23,2), (95,5), (5,65), (95,65) |
 
-### Stackup đề xuất
+### Stackup
 
 ```
-F.Cu (signal)
+F.Cu   tín hiệu
 prepreg 0.1 mm
-In1.Cu (GND)
+In1.Cu GND plane (toàn board)
 core 1.0 mm
-In2.Cu (PWR / VBAT zone)
+In2.Cu VBAT plane (toàn board)
 prepreg 0.1 mm
-B.Cu (signal)
+B.Cu   tín hiệu + zone +5V_SYS
 ```
 
 ---
 
-## 3. Điện trở cách ly (impedance)
+## 3. Điện trở cách ly
 
 | Cặp | Mục tiêu | Ghi chú |
 |---|---|---|
-| USB D+/D− | 90 Ω vi sai | chiều dài ngắn, không cần kiểm soát chặt ở mẫu |
-| MIPI CLK/D0/D1 | 100 Ω vi sai | **board hiện tại do autorouter đi dây, chưa kiểm soát impedance** |
-
-> **Cảnh báo:** MIPI trên board mẫu không được kiểm soát impedance. Với 720p và chiều dài ngắn (< 60 mm) khả năng vẫn chạy, nhưng nếu có lỗi hình ảnh thì đây là nghi phạm đầu tiên. Bản sản xuất nên route lại MIPI thủ công.
+| USB D+/D− | 90 Ω vi sai | ngắn, không kiểm soát chặt |
+| MIPI CLK/D0/D1 | 100 Ω vi sai | **chưa kiểm soát** — rủi ro nếu ảnh lỗi |
 
 ---
 
 ## 4. Ghi chú lắp ráp
 
-1. **U1 Core1106**: module stamp-hole 112 pad, cần stencil + reflow. Không hàn tay.
-2. **U2 TPS61088**: VQFN-20 3,5×3,5, pad 0,23×0,6 (giảm 0,01 mm so với TI để đủ clearance), EP 2,05 — cần via thermal dưới EP.
-3. **U5 CN3058E**: SOIC-8 có pad EP — cần dán và tản nhiệt.
-4. **J3 camera FPC 20P 0,5 mm**: lắp bằng tay, kiểm tra hướng tiếp điểm.
-5. **J11 modem 2×6 1,27 mm**: header, modem cắm rời.
-6. **BT1 CR1220**: holder, lắp pin sau cùng.
-7. **J1 USB-C**: kiểm tra chân CC (5,1 kΩ) trước khi cấp nguồn.
+1. **U1 Core1106**: module stamp-hole 112 pad, stencil + reflow, không hàn tay.
+2. **U2 TPS61088**: VQFN-20 3,5×3,5; pad 0,23×0,6 (giảm 0,01 so với TI để đủ clearance), EP 2,05; cần via thermal dưới EP.
+3. **U3 TPS62840**: **SON DLC 1,5×2 mm, 8 pad 0,6×0,25, pitch 0,5, KHÔNG có pad EP**. Không dùng footprint WSON 2×2.
+4. **U5 CN3058E**: SOIC-8 có pad EP — cần dán và tản nhiệt.
+5. **J2**: **JST VH 3,96 mm** (10 A), không phải XH.
+6. **J3**: FPC 20P 0,5 mm, kiểm tra hướng tiếp điểm.
+7. **J11**: header 2×6 1,27 mm, modem cắm rời.
+8. **BT1**: holder CR1220, lắp pin sau cùng.
+9. **J1 USB-C**: kiểm tra chân CC (5,1 kΩ) trước khi cấp nguồn.
 
-**Thứ tự ưu tiên dán:** mặt F.Cu trước, sau đó mặt B.Cu (VBAT zone + track B.Cu).
+**Thứ tự:** mặt F.Cu trước, mặt B.Cu sau (zone +5V).
 
 ---
 
 ## 5. Ăng-ten và cơ khí
 
-- Modem nằm trên board con, ăng-ten gắn trên board con.
-- Trên board mẹ: giữ vùng trống dưới board con modem, không đặt đồng/via cao tần.
-- Connector u.FL (nếu dùng) đặt sát cạnh board.
+- Modem trên breakout, antenna u.FL gắn breakout.
+- Giữ vùng trống dưới breakout modem trên board mẹ.
 - Vỏ nhôm đúc, thermal pad 2 mm từ U1 lên vỏ.
+- Chưa có bản vẽ vỏ/assembly drawing.
 
 ---
 
@@ -83,33 +82,33 @@ B.Cu (signal)
 
 | Hạng mục | Yêu cầu |
 |---|---|
-| Pin | LFP 1S 10 Ah + BMS 10 A |
+| Pin | LFP 1S 10 Ah + BMS ≥ 10 A |
 | Sạc | CN3058E 1 A, cấm sạc khi T > 40 °C |
-| Vận chuyển | UN38.3 + MSDS nếu gửi kèm pin |
-| Lắp ráp | Pin đấu sau khi đã kiểm tra rail 5 V/3,3 V |
+| Vận chuyển | UN38.3 + MSDS |
+| Lắp ráp | Đấu pin sau khi kiểm tra rail 5 V/3,3 V |
 
 ---
 
-## 7. DRC — kết quả cuối
+## 7. DRC cuối
 
 | Loại | Số lượng |
 |---|---|
-| unconnected | **0** |
-| short | **0** |
-| clearance | **0** |
-| track width | **0** |
-| copper edge | **0** |
-| silk_edge_clearance | 4 (chỉ in lụa) |
-| silk_over_copper | 2 (chỉ in lụa) |
+| unconnected | 0 |
+| short | 0 |
+| clearance | 0 |
+| track width | 0 |
+| silk_over_copper | 10 |
+| silk_edge_clearance | 5 |
 
-Không còn lỗi điện. Hai loại silk có thể bỏ qua hoặc xưởng tự cắt lụa.
+Chỉ còn lỗi in lụa — xưởng tự cắt lụa, không ảnh hưởng chức năng.
 
 ---
 
 ## 8. Kiểm tra trước khi gửi
 
-- [ ] Mở Gerber bằng trình xem (gerbv/KiCad) — đủ 4 lớp + drill
-- [ ] Đối chiếu BOM với CPL: đủ 81 ref
-- [ ] Kiểm tra phân cực: LED, diode, tụ hoá (nếu có)
+- [ ] Mở `CAM4G-fab.zip` bằng gerbv/KiCad — đủ 4 lớp + drill
+- [ ] Đối chiếu BOM với CPL: 81 ref (TP1/TP2 không dán — đúng)
+- [ ] Kiểm tra phân cực LED, diode
 - [ ] Kiểm tra U1 pad 1 khớp silkscreen
-- [ ] Xác nhận kích thước 100×70 và 4 lỗ khoan ở (5,3; 12,5), (95,5), (5,65), (95,65)
+- [ ] Xác nhận 4 lỗ khoan đúng toạ độ
+- [ ] Xác nhận J2 là JST VH, U3 là DLC

@@ -2,7 +2,7 @@
 	(version "E")
 	(design
 		(source "C:\\Users\\vuong\\Documents\\deepseek-harness\\default-workspace\\4g-camera\\hardware\\kicad\\CAM4G\\CAM4G.kicad_sch")
-		(date "2026-11-09T10:31:31")
+		(date "2026-11-09T12:31:14")
 		(tool "Eeschema 10.0.7")
 		(sheet
 			(number "1")
@@ -2489,7 +2489,7 @@
 		)
 		(comp
 			(ref "Q3")
-			(value "IRLZ44N")
+			(value "AO3400A")
 			(fields
 				(field
 					(name "Footprint")
@@ -2866,7 +2866,7 @@
 		)
 		(comp
 			(ref "R7")
-			(value "0.05R")
+			(value "0.01R")
 			(fields
 				(field
 					(name "Footprint")
@@ -7224,11 +7224,6 @@
 				(pintype "passive")
 			)
 			(node
-				(ref "R34")
-				(pin "1")
-				(pintype "passive")
-			)
-			(node
 				(ref "U1")
 				(pin "79")
 				(pinfunction "VCC5V0_SYS_79")
@@ -9229,6 +9224,11 @@
 			(node
 				(ref "R13")
 				(pin "2")
+				(pintype "passive")
+			)
+			(node
+				(ref "R34")
+				(pin "1")
 				(pintype "passive")
 			)
 			(node

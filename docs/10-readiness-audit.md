@@ -1,52 +1,61 @@
-# Rà soát sẵn sàng sản xuất — CAM4G v4 (kết quả cuối)
+# Rà soát sẵn sàng sản xuất — CAM4G v5 (sau 6 điểm sửa)
 
 - Ngày: 2026-11-09
-- Kết luận: **Sẵn sàng gửi xưởng gia công PCB và mua linh kiện** (còn 3 việc thương mại bên dưới).
+- Kết luận: **đã sửa 6 lỗi chặn**, board sẵn sàng gửi xưởng; còn 3 việc thương mại.
 
-## Trạng thái cuối
+## Sáu lỗi đã xác nhận và sửa
 
-| Hạng mục | Kết quả |
+| # | Lỗi | Bằng chứng | Sửa |
+|---|---|---|---|
+| 1 | **U3 sai package** | Datasheet DLC0008B: SON 1,5×2, 8 pad 0,6×0,25, pitch 0,5, **không có EP**; board dùng WSON 2×2 DSG | Tạo footprint DLC mới, pad 0,6×0,25 tại ±0,65, hàng y = ±0,75/±0,25; bỏ pad EP |
+| 2 | **INA226 quá thang** | 0,05 Ω × 3 A = 150 mV > ±81,92 mV | Đổi shunt **0,01 Ω** (2512, 1 W) → ±8,19 A, 30 mV tại 3 A, 0,31 W tại 5,56 A |
+| 3 | **Shunt/connector không đủ dòng** | 0,05 Ω × 5,56² = 1,55 W; JST XH ~3 A/chân | Shunt 2512 1 W; **J2 → JST VH 3,96 mm (10 A)** |
+| 4 | **Q3 sai vỏ** + transistor không nối | IRLZ44N chỉ có TO-220; Q1/Q2/Q3 pad trống vì symbol dùng chân chữ S/G/D/B/C/E, footprint SOT-23 dùng 1/2/3 | Q3 → **AO3400A**; thêm map chữ→số (Q1/Q2/Q3) — modem power và IR trước đó **không hoạt động** |
+| 5 | **VBUS_DET lấy từ +5V_SYS** | R34.1 nối +5V_SYS | Đổi nhãn schematic sang **VBUS_5V** (USB), netlist xác nhận |
+| 6 | **Modem/camera chưa chốt ngoại vi** | EC200U VBAT 3,3–4,3 V, I/O 1,8 V; J3 chỉ 3V3, U1 pin 13 (PWM/GPIO) treo | Ghi yêu cầu breakout: **buck 3,8 V + level shifter 1,8↔3,3 V**; camera: chốt module + pinout trước khi đặt |
+
+## Lỗi phát sinh thêm khi kiểm tra
+
+**Toàn bộ track đều 0,15 mm, kể cả VBAT/5 V/GND** — không đủ cho 5,56 A.
+
+Đã khắc phục bằng **plane**:
+- `In1.Cu`: GND toàn board
+- `In2.Cu`: VBAT toàn board
+- `B.Cu`: +5V_SYS
+- Track 0,15 mm chỉ còn vai trò tín hiệu; via fanout nối pad SMD xuống plane.
+
+## DRC cuối
+
+| Loại | Số lượng |
 |---|---|
-| ERC schematic | **0 lỗi, 0 cảnh báo** |
-| DRC PCB | **0 unconnected, 0 short, 0 clearance, 0 track width** |
-| Lỗi còn lại | 4 silk_edge_clearance + 2 silk_over_copper (chỉ in lụa) |
-| Gerber | 28 file + drill, đã đóng `gerber/CAM4G-fab.zip` (13 file) |
-| BOM | 81 dòng, value đúng, khớp board |
-| CPL | 79 dòng (TP1/TP2 không paste — đúng) |
+| unconnected | **0** |
+| short | **0** |
+| clearance | **0** |
+| track width | **0** |
+| **silk_over_copper** | 10 (chỉ in lụa) |
+| **silk_edge_clearance** | 5 (chỉ in lụa) |
 
-## Nguyên nhân gốc đã tìm ra
+## Thay đổi kỹ thuật kèm theo
 
-**Zone VBAT toàn board trên F.Cu bị xuất thành "plane" trong file DSN.** Freerouting coi F.Cu là mặt phẳng nên **bỏ qua net COMP_BOOST** — đó là lý do board luôn còn 2 điểm chưa nối dù router báo 0 unrouted.
-
-**Cách sửa:** bỏ zone F.Cu trước khi export DSN → route lại → net COMP được route bình thường → thêm lại zone B.Cu cho VBAT sau khi route.
-
-## Các sửa đổi khác
-
-| # | Vấn đề | Xử lý |
+| Hạng mục | Trước | Sau |
 |---|---|---|
-| 1 | BOM value = tên footprint | Tạo lại từ netlist, value đúng (10uF, 100nF…) |
-| 2 | Lỗ khoan (12,5) cách pad R21 0,055 mm | Dời đến (5,3; 12,5) |
-| 3 | 2 pad góc U2 cách 0,1485 mm | Giảm pad 0,24 → 0,23 mm (lệch 0,01 so với land pattern TI) |
-| 4 | Netclass clearance 0,2 trong khi track 0,15 | Hạ netclass xuống 0,15 |
-| 5 | Track 0,10/0,12 mm | Nới lên 0,15 mm |
-| 6 | BOM hệ thống ghi Pico Max | Sửa thành Core1106G3 N256 |
+| U3 | DSG WSON 2×2 + EP | DLC SON 1,5×2, 8 pad, không EP |
+| R7 | 0,05 Ω 1206 1 W | 0,01 Ω 2512 1 W |
+| J2 | JST XH 2,5 mm | JST VH 3,96 mm (10 A) |
+| Q3 | IRLZ44N SOT-23 | AO3400A SOT-23 |
+| R34 | +5V_SYS | VBUS_5V |
+| Q1/Q2/Q3 | không nối | nối đúng G/S/D, B/E/C |
+| Lỗ khoan | (12,5) | (3,5; 23,2) |
+| Clearance rule | 0,15 | 0,14 (JLCPCB min 0,127) |
 
-## Việc thương mại còn lại (không phải lỗi thiết kế)
+## Việc thương mại còn lại
 
-1. **Chọn mã LCSC cho thụ động** — hoặc để JLCPCB tự map theo value + footprint.
-2. **Chốt breakout EC200U-EU** cụ thể (5 V, UART 3,3 V, SIM nano, u.FL).
-3. **Chốt camera 20-pin, pin LFP 10 Ah + BMS, vỏ nhôm.**
+1. Chọn mã LCSC cho thụ động.
+2. Chốt breakout EC200U **có buck 3,8 V và level shifter 1,8↔3,3 V**.
+3. Chốt camera 20-pin + pinout (PWDN), pin LFP 10 Ah, vỏ.
 
-## Rủi ro kỹ thuật đã biết
+## Rủi ro còn lại
 
-- **MIPI chưa kiểm soát impedance 100 Ω** — rủi ro số 1 nếu ảnh lỗi; với 720p và dây ngắn có thể chạy.
-- **Pad U2 0,23 mm** thay vì 0,24 mm — vẫn trong dung sai hàn.
-- **Chưa có bản vẽ vỏ / assembly drawing.**
-
-## File gửi xưởng
-
-- `hardware/kicad/CAM4G/gerber/CAM4G-fab.zip`
-- `hardware/kicad/CAM4G/CAM4G-bom.csv`
-- `hardware/kicad/CAM4G/CAM4G-cpl.csv`
-- `hardware/kicad/CAM4G/CAM4G-bom-procurement.csv` (MPN gợi ý)
-- `docs/06-manufacturing.md` (thông số, stackup, ghi chú lắp ráp)
+- **MIPI chưa kiểm soát impedance 100 Ω**.
+- 10 silk_over_copper: xưởng tự cắt lụa, không ảnh hưởng.
+- Dòng ngủ 0,3 mA (15 µV trên shunt 0,01 Ω) vẫn dưới offset INA226 → **phải đo bằng đồng hồ ngoài**.
