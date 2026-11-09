@@ -109,3 +109,30 @@
 - ERC: 0 lỗi, 5 cảnh báo lib_symbol_mismatch do các symbol đã sửa (TPS62840 bỏ EP, Q1–Q3 đổi số chân, Conn_01x20 thêm filter).
 
 **Còn lại:** route tay boost/MIPI, impedance control, in 1:1.
+
+
+---
+
+## 12. Phát hiện chặn: L1 cách U2 ~80 mm
+
+Khi kiểm tra vị trí linh kiện cho vòng boost:
+
+| Linh kiện | Toạ độ |
+|---|---|
+| U2 (TPS61088) | (66,37; 56,21) |
+| **L1 (1,2 µH)** | **(5,41; 5,41)** |
+| C1 (10 µF vào) | (61,29; 54,94) |
+| C4 (47 µF ra) | (58,75; 51,13) |
+
+Khoảng cách L1–U2 ≈ **80 mm**. Với boost 600 kHz, 5 V/3 A, vòng SW dài như vậy gây điện cảm ký sinh lớn, ringing, EMI và giảm hiệu suất. Đây là **lỗi placement nghiêm trọng**, không phải lỗi route.
+
+Đã thử dời L1 về (58,4; 56,2) và route lại vòng boost bằng track 0,3–1,2 mm:
+- Kết quả: 15 short, 10 unconnected, 5 courtyard overlap — vùng quanh U2 quá chật cho cuộn 8×8 mm.
+- Đã **revert** board về trạng thái trước đó.
+
+**Kết luận:** board hiện tại **chưa nên đặt hàng**. Cần re-layout riêng vùng nguồn:
+1. Đặt L1 sát chân SW (≤ 5 mm), C1/C11 sát VIN, C4/C9 sát VOUT.
+2. Vòng C_in → L → SW → C_out ngắn nhất, track ≥ 1 mm hoặc dùng polygon.
+3. Sau đó route lại vùng nguồn và kiểm tra DRC.
+
+Các mục khác đã xong: parity 0, CAM4G lib, courtyard, filter, description.
