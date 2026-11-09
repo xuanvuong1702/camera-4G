@@ -96,3 +96,16 @@
 | In 1:1 | CAM4G-1to1.pdf |
 
 **Chưa làm:** route tay vòng boost và MIPI, impedance control, tạo lib CAM4G.pretty.
+
+
+---
+
+## 11. Parity đã về 0 (vòng 41)
+
+- Tạo libs/CAM4G.pretty (VQFN20_3.5, DLC0008B), đăng ký trong p-lib-table.
+- Thêm courtyard vào footprint thư viện Core1106.
+- Sửa filter J3 (Connector_FFC-FPC:*) và description U1.
+- **DRC strict: chỉ còn 10 silk_over_copper + 3 silk_edge_clearance** — 0 unconnected, 0 short, 0 clearance, 0 net conflict, 0 footprint mismatch, 0 lib issue.
+- ERC: 0 lỗi, 5 cảnh báo lib_symbol_mismatch do các symbol đã sửa (TPS62840 bỏ EP, Q1–Q3 đổi số chân, Conn_01x20 thêm filter).
+
+**Còn lại:** route tay boost/MIPI, impedance control, in 1:1.

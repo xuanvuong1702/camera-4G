@@ -4652,7 +4652,7 @@
 				)
 			)
 		)
-		(property "ki_fp_filters" "Connector*:*_1x??_*"
+		(property "ki_fp_filters" "Connector*:*_1x??_* Connector_FFC-FPC:*"
 			(at 0 0 0)
 			(show_name no)
 			(do_not_autoplace no)

@@ -1,3 +1,4 @@
 (fp_lib_table
   (lib (name "Core1106-PCB")(type "KiCad")(uri "${KIPRJMOD}/libs/Core1106-PCB.pretty")(options "")(descr "Core1106 footprint"))
+  (lib (name "CAM4G")(type "KiCad")(uri "${KIPRJMOD}/libs/CAM4G.pretty")(options "")(descr "CAM4G custom footprints"))
 )

@@ -2720,6 +2720,7 @@
 		(layer "F.Cu")
 		(uuid "20e9df2e-7a6b-40c9-b80d-acf305539ad6")
 		(at 30 35)
+		(descr "Core1106")
 		(property "Reference" "U1"
 			(at -16.764 -15.494 0)
 			(unlocked yes)
@@ -2759,7 +2760,7 @@
 				)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "Core1106"
 			(at 0 0 0)
 			(layer "F.Fab")
 			(hide yes)
