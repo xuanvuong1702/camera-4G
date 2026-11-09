@@ -1,133 +1,105 @@
-# Prototype v2 — Kiến trúc IPC (RV1106) & đấu dây
+# CAM4G — Kiến trúc & đấu dây (bản cuối v4)
 
-- SoC: Luckfox Pico Max (RV1106G3, 256 MB)
-- Camera: SC3336 3 MP MIPI
-- Modem: EC25-EU qua USB
-- MCU giám sát: STM32L0 (Nucleo-32)
-- Pin: LFP 1S 3,2 V 8 Ah
+| Thành phần | Model |
+|---|---|
+| SoC | Luckfox **Core1106G3 N256** (RV1106G3, 30×30 mm, 112 pad) |
+| Camera | SC3336 3 MP, FPC 20-pin 0,5 mm |
+| Modem | **Quectel EC200U-EU** qua UART (breakout) |
+| MCU giám sát | **STM32L011F4** (TSSOP-20) |
+| Pin | LFP 1S **10 Ah** + BMS |
+| Board | 100×70 mm, 4 lớp |
 
 ---
 
-## 1. Nguyên tắc
+## 1. Sơ đồ khối
 
-**Hai tầng điều khiển:**
-- **MCU luôn sống** (~0,3 mA): PIR, RTC, đo pin/nhiệt, bật/tắt rail 5 V của SoC, quyết định ngủ.
-- **SoC là tải**: chỉ bật khi cần ghi hoặc xử lý. Tắt hẳn thì tiết kiệm nhất nhưng boot 1–2 s; suspend thì wake nhanh nhưng ~30 mW.
+```
+PIR ─────► STM32L011 (luôn sống, ~0,3 mA)
+RTC ◄───►  • PIR, OneWire, ADC pin
+           • I2C slave 0x30 ↔ SoC
+           • BOOST_EN, MODEM_EN/PWRKEY/RESET
+                │
+                │ BOOST_EN
+        ┌───────▼────────┐
+        │ TPS61088 5 V   │──► Core1106 5 V
+        │ 3 A            │──► EC200U breakout 5 V
+        └───────┬────────┘
+                │
+        ┌───────▼────────┐
+        │ TPS62840 3,3 V │──► MCU, camera, sensors, I2C
+        └────────────────┘
 
-**Hai chế độ ngủ (người dùng chọn trong app):**
+LFP 10 Ah ── BMS ── VBAT ──► TPS61088 / TPS62840 / CN3058E (sạc)
+```
 
-| Chế độ | SoC | Modem | Dòng chờ | Wake từ cloud | Standby (8 Ah) |
+---
+
+## 2. Chân MCU (U6 — STM32L011F4, TSSOP-20)
+
+| Pin | Net | Chức năng |
+|---|---|---|
+| 1 | MCU_BOOT0 | boot mode |
+| 2 | MODEM_RESET | reset modem |
+| 3 | — | NC |
+| 4 | MCU_NRST | reset |
+| 5, 16 | +3V3 | nguồn |
+| 6 | PIR_OUT | PIR (vào) |
+| 7 | ONEWIRE | DS18B20 ×2 |
+| 8 | MODEM_PWRKEY | bật modem |
+| 9 | MODEM_STATUS | trạng thái modem |
+| 10 | MODEM_EN | cắt nguồn modem |
+| 11 | BOOST_EN | bật rail 5 V cho SoC |
+| 12 | SOC_READY | SoC báo sẵn sàng |
+| 13 | INA_ALERT | cảnh báo INA226 |
+| 14 | VBAT_SENSE | chia áp pin |
+| 15 | GND | |
+| 17 | I2C_SCL | I2C slave 0x30 |
+| 18 | I2C_SDA | I2C slave 0x30 |
+| 19 | SWDIO | nạp firmware |
+| 20 | SWCLK | nạp firmware |
+
+---
+
+## 3. Kết nối SoC (U1 — Core1106)
+
+| Chức năng | Chân module | Ghi chú |
+|---|---|---|
+| Camera MIPI | 2 lane + clock | FPC 20P J3 |
+| Camera I2C | CAM_SCL/SDA | cấu hình SC3336 |
+| SD | SD_CLK/CMD/D0–D3 | J4 microSD |
+| USB | USB_DP/DM | J1 USB-C, R32/R33 sang modem |
+| UART modem | UART1 TX/RX (pin 68/69) | J11 pin 9/10 |
+| Modem control | MODEM_PWRKEY/STATUS/RESET | J11 |
+| MCU | I2C1 (PA9/PA10) | slave 0x30 |
+| Debug | UART0 | J12 |
+| Nguồn | 5V_SYS, 3V3 | |
+
+---
+
+## 4. Modem EC200U-EU
+
+- UART 3,3 V: TXD→U1 RX, RXD→U1 TX.
+- 5 V vào breakout, PWRKEY/RESET/STATUS qua J11.
+- R32/R33 (USB 0 Ω) **DNP** khi dùng UART.
+- PPP `/dev/ttyS1` 921600; APN Viettel `v-internet`, Vina `m3-world`, Mobi `m-wap`.
+
+Chi tiết: `docs/09-modem-ec200u.md`.
+
+---
+
+## 5. Hai chế độ ngủ (pin 10 Ah)
+
+| Chế độ | SoC | Modem | Dòng chờ | Wake cloud | Standby |
 |---|---|---|---|---|---|
-| Canh gác nhanh | suspend | eDRX/PSM | 10–30 mW | 5–15 s | ~30–60 ngày |
-| Tiết kiệm tối đa | tắt rail | tắt | 0,3 mA | không (chỉ PIR/lịch) | nhiều tháng |
+| Canh gác nhanh | suspend | eDRX/PSM | 10–30 mW | 5–15 s | ~40–75 ngày |
+| Tiết kiệm tối đa | tắt rail | tắt | ~0,3 mA | không (PIR/lịch) | nhiều tháng |
 
-> Đây là đánh đổi **không thể tránh**: muốn nhận lệnh từ xa thì phải có thứ gì đó thức. Không có thiết kế pin nào vừa ngủ 0,3 mA vừa nhận lệnh tức thì.
-
----
-
-## 2. Sơ đồ khối
-
-```
-        ┌──────────────────────────────┐
-PIR ───►│ STM32L0 (luôn sống)          │
-RTC ◄──►│ • PIR ISR, lịch RTC          │
-        │ • ADC pin, DS18B20           │
-        │ • điều khiển SOC_EN, CHG_EN  │
-        └───────┬──────────────┬───────┘
-                │ SOC_EN       │ UART (event/status)
-        ┌───────▼───────┐      │
-        │ Load switch   │      │
-        │ 5V → SoC      │      │
-        └───────┬───────┘      │
-        ┌───────▼──────────────────────────┐
-        │ Luckfox Pico Max (RV1106)        │
-        │  • SC3336 MIPI                   │
-        │  • microSD                       │
-        │  • USB ──► EC25-EU ──► 4G        │
-        │  • IR PWM, IR-CUT                │
-        └──────────────────────────────────┘
-
-LFP 3,2V ── BMS ── boost 5V/3A ──┬──► Luckfox 5V
-                                 ├──► EC25 5V (USB adapter)
-                                 └──► buck 3,3V ──► STM32L0 + sensors + IR gate
-```
-
-**Tại sao 5 V là rail chính:** Luckfox và USB modem đều nhận 5 V. Chỉ cần một boost 5 V/3 A khỏe + bulk cap; buck 3,3 V riêng cho MCU/cảm biến để nhiễu modem không ảnh hưởng.
+Đánh đổi không tránh được: muốn nhận lệnh từ xa thì phải có thứ gì đó thức.
 
 ---
 
-## 3. Phân bổ chân STM32L0
+## 6. Ghi chú
 
-| Tín hiệu | Hướng | Chân đề xuất | Ghi chú |
-|---|---|---|---|
-| PIR_OUT | vào | PA0 (EXTI) | AM312 |
-| SOC_EN | ra | PA1 | Gate AO3401 / load switch |
-| SOC_READY | vào | PA2 | SoC kéo cao khi app sẵn sàng |
-| SOC_UART_TX | ra | PA9 | USART1 TX → SoC RX |
-| SOC_UART_RX | vào | PA10 | USART1 RX ← SoC TX |
-| I2C_SDA | 2 chiều | PB7 | DS3231 + INA226 |
-| I2C_SCL | ra | PB6 | 4,7 kΩ pull-up |
-| ONEWIRE | 2 chiều | PA4 | DS18B20 ×2, 4,7 kΩ |
-| VBAT_ADC | vào | PA5 | Chia áp 1:2 |
-| CHG_EN | ra | PA6 | Cấm sạc khi pin nóng |
-| LED_STATUS | ra | PA7 | |
-
-**Chân SoC (Luckfox) dùng cho:**
-- MIPI CSI → SC3336
-- USB → EC25
-- SD → thẻ nhớ
-- GPIO: IR PWM, IR-CUT A/B, SOC_READY
-- UART → STM32L0
-
----
-
-## 4. Đấu nối modem EC200U-EU (UART)
-
-```
-EC200U breakout VIN ──► +5V_MODEM (boost 5 V + 470–1000 µF sát chân)
-EC200U GND ──────────► GND chung
-EC200U TXD ──────────► U1 UART1_RX (pin 69), mức 3,3 V
-EC200U RXD ──────────► U1 UART1_TX (pin 68), mức 3,3 V
-EC200U PWRKEY ───────► J11 pin 5 (kéo xuống 500 ms để bật)
-EC200U STATUS ───────► J11 pin 6
-EC200U RESET ────────► J11 pin 7
-Antenna u.FL ────────► keep-out ≥ 10 mm
-SIM ─────────────────► khe nano trên breakout
-```
-
-- Dùng **UART thay USB**: không cần driver QMI, debug bằng terminal dễ hơn.
-- R32/R33 (0 Ω nối USB SoC ↔ modem) để **DNP** ở bản EC200U.
-- UART 3,3 V; nếu breakout chỉ ra 1,8 V thì thêm level shifter.
-- PPP qua `/dev/ttyS1` 921600; APN: Viettel `v-internet`, Vina `m3-world`, Mobi `m-wap`.
-- Nếu không nhận modem: kiểm tra `/dev/ttyS1`, gõ `AT` bằng terminal, xem `dmesg`.
-
----
-
-## 5. Đấu nối camera + IR
-
-```
-SC3336 ──FPC 24-pin──► Luckfox MIPI CSI
-IR-CUT ──► GPIO_A / GPIO_B (qua driver có sẵn trên module)
-IR LED:
-  5V ──► LED1 ──► LED2 ──► 10Ω 1W ──► Drain IRLZ44N
-                                       Source ──► GND
-                                       Gate ──► GPIO (qua 100Ω), 10kΩ kéo xuống
-```
-
-IR do **SoC** điều khiển (không phải MCU) để đồng bộ với frame/exposure.
-
----
-
-## 6. Thứ tự bring-up
-
-1. Cấp 5 V từ adapter, đo rail 5 V và 3,3 V.
-2. Nạp image Luckfox, boot, SSH được.
-3. Camera: chụp JPEG 720p, xem trên máy tính.
-4. Đo **quick-boot** (xem docs/03) — cổng kiểm tra số 1.
-5. Đo **suspend** — cổng kiểm tra số 2.
-6. EC25: nhận SIM, QMI, ping, iperf3.
-7. PIR → MCU → bật SoC → ghi clip; đo độ trễ.
-8. IR: chụp trong tối 3 m, chỉnh dòng.
-9. Lắp pin + BMS, xả 7 h.
-
-> Trước khi hàn: xác nhận connector MIPI của Luckfox khớp SC3336 (số chân + bước 0,5 mm).
+- I2C giữa SoC và MCU là kênh duy nhất để đọc pin/nhiệt và điều khiển nguồn.
+- PIR wake: MCU đánh thức bằng EXTI, bật BOOST_EN, chờ SOC_READY.
+- MIPI chưa kiểm soát impedance — xem `docs/06-manufacturing.md`.

@@ -95,7 +95,7 @@ Giảm nhiều nhất nhưng khoá vào nhà cung cấp, khó tuỳ biến firmw
 ## 4. Kiến trúc đề xuất sau giảm
 
 - Core1106 (module OEM)
-- EC25-EU trên board con (module OEM)
+- EC200U-EU trên breakout cắm header (module OEM)
 - Camera day/night 20-pin, IR-CUT + LED tích hợp (module OEM)
 - Nguồn: giữ TPS61088 + TPS62840 + CN3058E (đã tối ưu cho LFP/5V/3A)
 - MCU STM32L011 (giữ)

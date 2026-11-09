@@ -1,5 +1,8 @@
 # Camera 4G chạy pin — Phân tích khả thi & Kiến trúc v0.1
 
+> **Tài liệu lịch sử (vòng 1–4).** Trạng thái hiện tại xem [HANDOVER.md](../HANDOVER.md).
+
+
 - Ngày: 2026-11-08
 - Trạng thái: **draft** — đã được cập nhật bởi [v0.2](01-design-decisions-v0.2.md) với các yêu cầu đã chốt
 - Mọi con số công suất dưới đây là **ước tính để tính toán**, phải đo lại trên board thật ở Giai đoạn 1.

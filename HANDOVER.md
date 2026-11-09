@@ -37,7 +37,7 @@ Tài liệu tổng hợp để bàn giao cho xưởng và đội firmware.
 ├── hardware/
 │   ├── kicad/CAM4G/              # project, gerber, BOM, CPL, preview
 │   ├── core1106/                 # symbol, footprint, datasheet gốc
-│   ├── datasheets/               # TPS61088, TPS62840, INA226, CN3058E, EC25…
+│   ├── datasheets/               # TPS61088, TPS62840, INA226, CN3058E, EC200U…
 │   ├── bom-prototype-v2.csv
 │   └── carrier-board-spec.md
 └── firmware/
@@ -122,7 +122,7 @@ Các lỗi tìm thấy và đã sửa:
 
 Trạng thái sau sửa:
 - 1374 track + 177 via, route 100 % theo Freerouting
-- DRC: **2 unconnected (COMP)**, 10 clearance 0,15 mm, 2 silk — không short, không lỗi khoan
+- (đã sửa ở mục 9) DRC khi đó còn 2 unconnected COMP — nguyên nhân và cách xử lý ở mục 9
 - Gerber/BOM/CPL đã xuất lại theo board mới
 
 Firmware:

@@ -243,4 +243,4 @@ Khối nguồn **đã được ghép vào schematic gốc** `CAM4G.kicad_sch`:
 
 1. Sheet connector (USB-C, SD, FPC camera, modem header, PIR/IR/DS18B20).
 2. Sheet MCU (STM32L011, DS3231M, TS3USB221).
-3. PCB 80×55, 4 lớp.
+3. PCB 100×70, 4 lớp.

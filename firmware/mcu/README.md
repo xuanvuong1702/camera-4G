@@ -1,15 +1,16 @@
 # CAM4G — MCU firmware (STM32L011F4)
 
-Supervisor MCU: quản lý nguồn, PIR, đọc pin/nhiệt, giao tiếp I2C với SoC.
+Supervisor MCU: quản lý nguồn, PIR, OneWire, đọc pin, giao tiếp I2C với SoC.
 
 ## Kiến trúc
 
 ```
-main.c  ──►  pir_update / power_tick / hal_enter_stop
+main.c  ──►  pir_update / power_tick / hal_poll
               │
-power.c  ─────┼──►  HAL: SOC_EN, SOC_READY, MODEM_EN
+power.c  ─────┼──►  HAL: BOOST_EN, SOC_READY, MODEM_EN
 proto.c  ─────┘     thanh ghi I2C (0x30)
 pir.c               lọc nhiễu 200 ms
+target/hal_stm32l0.c  GPIO, SysTick, ADC, I2C slave, __WFI
 ```
 
 ## Thanh ghi I2C (slave 0x30)
@@ -23,28 +24,17 @@ pir.c               lọc nhiễu 200 ms
 | 0x05 | CMD | 1 wake, 2 sleep, 3 modem on, 4 modem off |
 | 0x06 | VERSION | 0x10 |
 
-## Build & test trên máy tính
+## Test trên máy tính
 
-```bash
+```powershell
 cd firmware/mcu
-make test        # clang, chạy 6 nhóm test
+clang -std=c11 -Wall -Wextra -Iinclude src/power.c src/proto.c src/pir.c host/hal_mock.c host/test_mcu.c -o build/test_mcu.exe
+./build/test_mcu.exe
 ```
 
-## Build cho target
-
-Cần `arm-none-eabi-gcc` + STM32CubeL0 (CMSIS device header + HAL). Máy hiện tại
-**không có** toolchain này, nên phần target chưa được biên dịch.
-
-## Việc còn lại
-
-- Viết `hal_stm32l0.c` (GPIO/I2C/ADC/UART/PWR) — cần board thật để kiểm tra.
-- Startup + linker script cho STM32L011F4 (16 KB flash, 2 KB RAM).
-- I2C slave interrupt handler gọi `proto_read/proto_write`.
-- Nối PIR vào EXTI, đánh thức bằng STOP mode.
+**6 nhóm test**: wake sequence, ready timeout, sleep, modem, PIR debounce, battery/temp.
 
 ## Build cho target (đã chạy được)
-
-Toolchain: `Arm.GnuArmEmbeddedToolchain` 14.2.Rel1 + CMSIS headers trong `target/cmsis/`.
 
 ```powershell
 cd firmware/mcu/target
@@ -55,24 +45,18 @@ arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -Os -std=c11 -Icmsis -I../include 
 arm-none-eabi-objcopy -O binary build/firmware.elf build/firmware.bin
 ```
 
-Kết quả: **1088 B text, 4 B data, 28 B bss** — vừa 16 KB flash / 2 KB RAM.
+Kết quả: **1720 B text, 8 B data, 36 B bss** — vừa 16 KB flash / 2 KB RAM.
 
-## Còn thiếu để chạy trên board
+## Đã có / chưa kiểm chứng
 
-- **I2C1 slave interrupt** (PA9/PA10) gọi `proto_read/proto_write` — chưa viết
-- PIR EXTI wake từ STOP mode
+**Đã có:**
+- Power sequencing với timeout 3 s
+- I2C slave polling (ADDR/RXNE/TXE/STOPF/NACKF)
+- PIR debounce 200 ms
+- ADC pin, SysTick 1 ms, STOP mode
+
+**Chưa kiểm chứng trên board:**
+- AF4 cho PA9/PA10 có đúng với STM32L011
+- Thời điểm preload TXDR khi đọc
 - Hiệu chỉnh ADC theo VREF thực
-
-## Cập nhật vòng 13 — I2C slave
-
-Đã thêm `hal_poll()` vào HAL và main loop:
-- Cấu hình I2C1 slave 0x30 trên PA9/PA10 (AF4, open-drain, pull-up)
-- Xử lý ADDR / RXNE / TXE / STOPF / NACKF
-- Ghi: byte đầu = con trỏ thanh ghi, các byte sau = dữ liệu
-- Đọc: trả `proto_read(reg)` và tự tăng con trỏ
-
-**Build target:** 1760 B text, 8 B data, 32 B bss — vừa 16 KB / 2 KB.
-
-**Chưa kiểm chứng trên phần cứng.** Hai điểm cần xác nhận khi có board:
-- AF4 cho PA9/PA10 có đúng với STM32L011 không
-- Chuỗi ADDR → TXE có cần preload TXDR sớm hơn không
+- EXTI wake cho PIR từ STOP mode

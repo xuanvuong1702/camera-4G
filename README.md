@@ -1,75 +1,83 @@
-# Camera 4G chạy pin — dự án sản phẩm
+# Camera 4G chạy pin — CAM4G
 
-Camera ngoài trời, pin LFP, 4G, hồng ngoại, phát hiện chuyển động, ngủ sâu và đánh thức từ xa.
+Camera ngoài trời, pin LFP 10 Ah, 4G, hồng ngoại, phát hiện chuyển động, ngủ sâu và đánh thức từ xa.
+
+> **Bắt đầu đọc từ [`HANDOVER.md`](HANDOVER.md)** — tổng hợp trạng thái, đã/chưa kiểm chứng và việc còn lại.
 
 ## Trạng thái
 
 | Hạng mục | Trạng thái |
 |---|---|
-| Yêu cầu | Đã chốt |
-| Kiến trúc | Core1106 (RV1106) + MCU giám sát |
-| BOM | v2 — cần cập nhật v3 (Core1106, vỏ nhôm, pin 10 Ah) |
-| Phần cứng | KiCad v0.1 — sheet 0 đã chạy ERC |
-| Firmware | Khung (chưa chạy trên phần cứng) |
+| Yêu cầu & kiến trúc | Đã chốt |
+| Schematic | **ERC 0 lỗi, 0 cảnh báo** |
+| PCB | 100×70 mm, 4 lớp, **DRC 0 unconnected / 0 short / 0 clearance** |
+| Gerber + drill | Đã xuất, đóng gói `gerber/CAM4G-fab.zip` |
+| BOM | 81 dòng, value đúng; kèm BOM mua hàng có MPN |
+| CPL | 79 dòng (TP1/TP2 không paste — đúng) |
+| Firmware Linux | **17/17 test pass** (mô phỏng) |
+| Firmware MCU | **6/6 test host**, build ARM 1720 B |
 | Cloud/app | Chưa bắt đầu |
 
 ## Quyết định quan trọng
 
 - **720p**, IR ≤ 3 m, ghi local 7 h, không khí 40–45 °C.
-- **Core1106** (module 30×30, 112 chân) — không dùng dev board Pico Max.
-- **Pin LFP 10 Ah** ngay từ đầu (dữ liệu thực: module cần 1 A @ 5 V, đỉnh 2,4 W).
-- **Vỏ nhôm đúc** — bắt buộc, vì Core1106 chỉ rated −20…+60 °C.
-- **Modem EC25-EU trên board con** cắm header, thay được.
-- **Hai chế độ ngủ**: "canh gác nhanh" (~30–60 ngày, nhận lệnh 5–15 s) và "tiết kiệm tối đa" (nhiều tháng, không nhận lệnh từ xa).
+- **Core1106G3 N256** (module 30×30, 112 pad) — không dùng dev board Pico Max.
+- **Pin LFP 10 Ah** + BMS ngay từ đầu.
+- **Vỏ nhôm đúc** — bắt buộc, Core1106 chỉ rated −20…+60 °C.
+- **Modem Quectel EC200U-EU** qua UART, breakout cắm header J11; R32/R33 DNP.
+- **Hai chế độ ngủ**: "canh gác nhanh" (~40–75 ngày, nhận lệnh 5–15 s) và "tiết kiệm tối đa" (nhiều tháng, chỉ PIR/lịch).
 - Sạc bị cấm khi nhiệt độ pin > 40 °C.
+- Board **100×70 mm** (80×55 không đủ chỗ cho 81 linh kiện).
 
 ## Cấu trúc
 
 ```
 4g-camera/
+├── HANDOVER.md                   # tổng hợp trạng thái + việc còn lại
+├── README.md
 ├── docs/
-│   ├── 00-feasibility-and-architecture.md
-│   ├── 01-design-decisions-v0.2.md
-│   ├── 02-ipc-track-a.md
-│   └── 03-week1-validation.md
+│   ├── 00–04                     # phân tích lịch sử (đã lưu)
+│   ├── 05-simplification.md      # phương án giảm linh kiện
+│   ├── 06-manufacturing.md       # hồ sơ gửi xưởng
+│   ├── 07-test-plan.md           # kế hoạch kiểm tra 8 giai đoạn
+│   ├── 08-bringup.md             # hướng dẫn cấp nguồn lần đầu
+│   ├── 09-modem-ec200u.md        # chọn & đấu modem
+│   └── 10-readiness-audit.md     # rà soát sẵn sàng sản xuất
 ├── hardware/
-│   ├── bom-prototype-v2.csv
-│   ├── carrier-bom.csv
-│   ├── carrier-board-spec.md
-│   ├── core1106/                 # file chính thức của Luckfox (symbol, footprint, 3D, datasheet)
-│   └── kicad/CAM4G/              # project KiCad v0.1
-└── firmware/                     # khung ESP-IDF (lưu tham khảo)
+│   ├── POWER.md                  # thiết kế khối nguồn
+│   ├── wiring-v2-ipc.md          # kiến trúc & đấu dây
+│   ├── bom-prototype-v3.csv      # BOM hệ thống
+│   ├── datasheets/               # datasheet gốc
+│   └── kicad/CAM4G/              # project, gerber, BOM, CPL, libs, tools
+└── firmware/
+    ├── linux/                    # app Python + 17 test
+    └── mcu/                      # C + host test + target build (CMSIS)
 ```
 
-## Bước tiếp theo
+## Hồ sơ gửi xưởng
 
-1. Vẽ **sheet nguồn** (TPS61088, TPS62840, CN3058E, INA226) — cần datasheet.
-2. Vẽ **sheet connector** — cần pinout FPC 24P của SC3336.
-3. Vẽ **sheet MCU** (STM32L011, DS3231M, TS3USB221).
-4. Xuất PCB 80×55, 4 lớp.
-5. Cập nhật BOM v3 và đặt hàng.
+| File | Vị trí |
+|---|---|
+| Gerber + drill | `hardware/kicad/CAM4G/gerber/CAM4G-fab.zip` |
+| BOM | `hardware/kicad/CAM4G/CAM4G-bom.csv` |
+| BOM mua hàng (MPN) | `hardware/kicad/CAM4G/CAM4G-bom-procurement.csv` |
+| CPL | `hardware/kicad/CAM4G/CAM4G-cpl.csv` |
+| Thông số & lắp ráp | `docs/06-manufacturing.md` |
 
 ## Nguyên tắc làm việc
 
-- Mọi con số công suất/nhiệt đều là **ước tính** cho đến khi đo trên board thật.
+- Mọi con số công suất/nhiệt là **ước tính** cho đến khi đo trên board thật.
 - Không đoán số chân IC — sai một chân là hỏng board và mất 3 tuần.
 - Không tuyên bố "chạy được" khi chưa có phép đo.
 
-## Cập nhật firmware (vòng 10)
+## Đã kiểm chứng / chưa
 
-- **Linux app** (`firmware/linux`): 10/10 unit test pass, chạy mô phỏng được
-- **MCU firmware** (`firmware/mcu`): biên dịch bằng clang, 6 nhóm test pass
-- Toolchain đã cài trên máy: LLVM-MinGW (host), JDK 25 (Freerouting)
-- Chưa có `arm-none-eabi-gcc` → firmware target STM32 chưa build được
+**Đã:** ERC, DRC, BOM↔board, Gerber, firmware test trên host, build ARM.
 
-## Hồ sơ sản xuất & kiểm tra (vòng 11)
+**Chưa:** chạy trên board thật, I2C slave, dòng ngủ, 7 h ghi ở 60 °C, 4G trên 3 nhà mạng, sạc LFP.
 
-- `docs/06-manufacturing.md` — thông số PCB, stackup, ghi chú lắp ráp, DRC đã chấp nhận, checklist gửi xưởng
-- `docs/07-test-plan.md` — 8 giai đoạn kiểm tra từ board trống đến field test 72 h, tiêu chí nghiệm thu lô 5 bộ
-- `docs/05-simplification.md` — 6 phương án giảm linh kiện (A–F) và khuyến nghị A+B+C
+## Việc tiếp theo
 
-## Bàn giao (vòng 14)
-
-- `HANDOVER.md` — tổng hợp trạng thái, cấu trúc, đã/chưa kiểm chứng, quyết định còn treo
-- `docs/08-bringup.md` — hướng dẫn cấp nguồn lần đầu, 8 bước, 5 rủi ro đã biết
-- Kiểm tra: BOM 81/81 khớp board, CPL 79/81 (TP1/TP2 không paste — đúng)
+1. Chọn mã LCSC cho thụ động (hoặc để JLCPCB map theo value + footprint).
+2. Chốt breakout EC200U, camera 20-pin, pin 10 Ah, vỏ.
+3. Đặt 5 bộ → làm theo `docs/08-bringup.md`.

@@ -59,7 +59,7 @@ B.Cu (signal)
 ## 4. Ghi chú lắp ráp
 
 1. **U1 Core1106**: module stamp-hole 112 pad, cần stencil + reflow. Không hàn tay.
-2. **U2 TPS61088**: VQFN-20 3,5×3,5, pad EP ở giữa — cần via thermal dưới EP.
+2. **U2 TPS61088**: VQFN-20 3,5×3,5, pad 0,23×0,6 (giảm 0,01 mm so với TI để đủ clearance), EP 2,05 — cần via thermal dưới EP.
 3. **U5 CN3058E**: SOIC-8 có pad EP — cần dán và tản nhiệt.
 4. **J3 camera FPC 20P 0,5 mm**: lắp bằng tay, kiểm tra hướng tiếp điểm.
 5. **J11 modem 2×6 1,27 mm**: header, modem cắm rời.
@@ -90,16 +90,19 @@ B.Cu (signal)
 
 ---
 
-## 7. DRC — các điểm đã chấp nhận
+## 7. DRC — kết quả cuối
 
-| Loại | Số lượng | Lý do chấp nhận |
-|---|---|---|
-| clearance 0,15 mm | 11 | JLCPCB standard min 0,127 mm |
-| track width 0,15 mm | 4 | JLCPCB min 0,1 mm |
-| via 0,45/0,3 | — | JLCPCB hỗ trợ via 0,45 mm |
-| silk overlap | 6 | chỉ ảnh hưởng in lụa |
+| Loại | Số lượng |
+|---|---|
+| unconnected | **0** |
+| short | **0** |
+| clearance | **0** |
+| track width | **0** |
+| copper edge | **0** |
+| silk_edge_clearance | 4 (chỉ in lụa) |
+| silk_over_copper | 2 (chỉ in lụa) |
 
-Không còn short, không còn unconnected, không còn lỗi khoan.
+Không còn lỗi điện. Hai loại silk có thể bỏ qua hoặc xưởng tự cắt lụa.
 
 ---
 
@@ -109,4 +112,4 @@ Không còn short, không còn unconnected, không còn lỗi khoan.
 - [ ] Đối chiếu BOM với CPL: đủ 81 ref
 - [ ] Kiểm tra phân cực: LED, diode, tụ hoá (nếu có)
 - [ ] Kiểm tra U1 pad 1 khớp silkscreen
-- [ ] Xác nhận kích thước 100×70 và 4 lỗ khoan
+- [ ] Xác nhận kích thước 100×70 và 4 lỗ khoan ở (5,3; 12,5), (95,5), (5,65), (95,65)

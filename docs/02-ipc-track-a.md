@@ -1,5 +1,8 @@
 # Có nên dùng IPC (Linux SoC) ngay từ prototype?
 
+> **Tài liệu lịch sử (vòng 1–4).** Trạng thái hiện tại xem [HANDOVER.md](../HANDOVER.md).
+
+
 - Ngày: 2026-11-08
 - Bối cảnh: yêu cầu đã chốt — 720p, IR ≤ 3 m, ghi local 7 h, không khí 40–45 °C, prototype 1–2 bộ
 - Kết luận ngắn: **Nếu mục tiêu là sản phẩm → nên chuyển ngay. Nếu chỉ cần kiểm chứng ý tưởng trong 4 tuần → giữ ESP32-S3.**

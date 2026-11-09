@@ -1,5 +1,8 @@
 # Thiết kế v0.2 — Yêu cầu đã chốt & điều chỉnh
 
+> **Tài liệu lịch sử (vòng 1–4).** Trạng thái hiện tại xem [HANDOVER.md](../HANDOVER.md).
+
+
 - Ngày: 2026-11-08
 - Thay thế phần "câu hỏi mở" của [v0.1](00-feasibility-and-architecture.md)
 - Trạng thái: **chốt được hướng prototype**

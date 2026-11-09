@@ -1,5 +1,8 @@
 # Tuần 1 — Cổng kiểm tra trước khi cam kết IPC
 
+> **Tài liệu lịch sử (vòng 1–4).** Trạng thái hiện tại xem [HANDOVER.md](../HANDOVER.md).
+
+
 Mục đích: **đo 4 con số quyết định** trên Luckfox Pico Max trước khi đặt phần còn lại của BOM.
 Nếu trượt cổng nào, có phương án xử lý ngay, không phải làm lại từ đầu.
 
