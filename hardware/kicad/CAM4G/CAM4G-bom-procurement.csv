@@ -1,0 +1,56 @@
+﻿Value,Footprint,Qty,References,Suggested MPN,Manufacturer,Notes
+CR1220,Battery_Panasonic_CR1220-VCN_Vertical_CircularHoles,1,BT1,CR1220-VCN,Panasonic,holder + cell
+10uF,C_0603_1608Metric,4,C1 C11 C13 C14,,,select by spec
+100nF,C_0603_1608Metric,7,C2 C6 C12 C15 C16 C17 C19,,,select by spec
+3.3uF,C_0603_1608Metric,1,C3,,,select by spec
+47uF,C_0603_1608Metric,1,C4,,,select by spec
+2.2nF,C_0603_1608Metric,1,C5,,,select by spec
+47nF,C_0603_1608Metric,1,C7,,,select by spec
+DNP,C_0603_1608Metric,1,C8,,,select by spec
+1uF,C_0603_1608Metric,2,C9 C18,,,select by spec
+4.7uF,C_0603_1608Metric,1,C10,,,select by spec
+RED,LED_0603_1608Metric,1,D1,,,select by spec
+GRN,LED_0603_1608Metric,1,D2,,,select by spec
+PWR,LED_0603_1608Metric,1,D3,,,select by spec
+BAT54,D_SOD-323,2,D5 D6,BAT54,onsemi,Schottky
+USB-C,USB_C_Receptacle_HRO_TYPE-C-31-M-12,1,J1,TYPE-C-31-M-12,HRO,16P
+BAT,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,1,J2,,,select by spec
+CAM 20P,Hirose_FH12-20S-0.5SH_1x20-1MP_P0.50mm_Horizontal,1,J3,FH12-20S-0.5SH,Hirose,FPC 20P 0.5mm
+microSD,microSD_HC_Hirose_DM3AT-SF-PEJM5,1,J4,DM3AT-SF-PEJM5,Hirose,push-push
+PIR,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,1,J6,,,select by spec
+IR LED,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,1,J7,,,select by spec
+IR-CUT,JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical,1,J8,,,select by spec
+DS18B20,JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical,2,J9 J10,,,select by spec
+MODEM,PinHeader_2x06_P1.27mm_Vertical,1,J11,,,select by spec
+DEBUG UART,PinHeader_1x03_P2.54mm_Vertical,1,J12,,,select by spec
+SWD,PinHeader_1x04_P2.54mm_Vertical,1,J13,,,select by spec
+1.2uH,L_Bourns-SRN8040_8x8.15mm,1,L1,SRN8040-1R2M,Bourns,verify Isat >= 9 A
+2.2uH,L_Bourns-SRN4018,1,L2,SRN4018-2R2M,Bourns,verify
+10k B3950,R_0603_1608Metric,1,NTC1,,,select by spec
+AO3401,SOT-23,1,Q1,AO3401A,AOS,P-MOS
+2N3904,SOT-23,1,Q2,2N3904,onsemi,NPN
+IRLZ44N,SOT-23,1,Q3,IRLZ44NPBF,Infineon,N-MOS logic level
+178k,R_0603_1608Metric,1,R1,,,select by spec
+56k,R_0603_1608Metric,1,R2,,,select by spec
+267k,R_0603_1608Metric,2,R3 R6,,,select by spec
+64.9k,R_0603_1608Metric,1,R4,,,select by spec
+10.5k,R_0603_1608Metric,1,R5,,,select by spec
+0.05R,R_1206_3216Metric,1,R7,0.05R 1% 1W,any,current shunt
+4.7k,R_0603_1608Metric,2,R8 R9,,,select by spec
+1.2k,R_0603_1608Metric,1,R10,,,select by spec
+1k,R_0603_1608Metric,3,R11 R12 R21,,,select by spec
+7.15k,R_0603_1608Metric,1,R13,,,select by spec
+5.1k,R_0603_1608Metric,2,R14 R15,,,select by spec
+100k,R_0603_1608Metric,3,R16 R18 R20,,,select by spec
+10k,R_0603_1608Metric,5,R17 R23 R25 R34 R35,,,select by spec
+100R,R_0603_1608Metric,1,R19,,,select by spec
+0R,R_0603_1608Metric,4,R24 R31 R32 R33,,,select by spec
+RESET,SW_SPST_B3S-1000,1,SW1,B3S-1000,Omron,tactile
+TP_3V3,TestPoint_Pad_1.5x1.5mm,1,TP1,,,select by spec
+TP_1V8,TestPoint_Pad_1.5x1.5mm,1,TP2,,,select by spec
+Core1106,Core1106-SMT,1,U1,Core1106G3 N256,Luckfox,module 30x30 112 pad
+TPS61088,,1,U2,,,select by spec
+TPS62840,Texas_DSG0008A_WSON-8-1EP_2x2mm_P0.5mm_EP0.9x1.6mm,1,U3,TPS62840DLC,TI,WSON-8
+INA226,MSOP-10_3x3mm_P0.5mm,1,U4,INA226AIDGSR,TI,VSSOP-10
+CN3058E,SOIC-8-1EP_3.9x4.9mm_P1.27mm_EP2.41x3.3mm,1,U5,CN3058E,Consonance,eSOP-8
+STM32L011F4,TSSOP-20_4.4x6.5mm_P0.65mm,1,U6,STM32L011F4P6,ST,TSSOP-20

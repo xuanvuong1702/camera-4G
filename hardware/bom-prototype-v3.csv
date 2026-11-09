@@ -1,5 +1,5 @@
-STT,Wave,Nhóm,Linh kiện,Model / Thông số,SL,Giá USD,Nơi mua / Ghi chú
-1,W1,SoC,Luckfox Pico Max,RV1106G3 256MB DDR / MIPI CSI / USB / SD,1,25,Shopee/AliExpress - chọn bản Max 256MB
+﻿STT,Wave,Nhóm,Linh kiện,Model / Thông số,SL,Giá USD,Nơi mua / Ghi chú
+1,W1,SoC,Luckfox Core1106G3 N256,RV1106G3 256MB DDR3L + 256MB NAND / MIPI CSI / USB / SD,1,20,Module 30x30 112 pad - không dùng dev board
 2,W1,Camera,SC3336 3MP MIPI,Mua kèm board để đúng connector,1,10,Mua cùng Luckfox để chắc khớp FPC
 3,W1,4G,Quectel EC200U-EU breakout,Cat-1 UART 3.3V + khe SIM nano + u.FL,1,14,Shopee/AliExpress - chọn bản EU (B1/3/5/7/8/20/28); UART 3.3V
 4,W1,MCU,STM32L0 Nucleo-32,L011K4 hoặc tương đương,1,12,Shopee
