@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "Core1106")(type "KiCad")(uri "${KIPRJMOD}/libs/Core1106.kicad_sym")(options "")(descr "Core1106 module"))
+  (lib (name "CAM4G")(type "KiCad")(uri "${KIPRJMOD}/libs/CAM4G.kicad_sym")(options "")(descr "CAM4G power ICs"))
+)

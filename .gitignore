@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build outputs
+firmware/mcu/build/
+firmware/mcu/target/build/
+firmware/linux/tmp/
+
+# KiCad local / intermediate
+*.kicad_prl
+*.dsn
+*.ses
+*.rpt
+
+# Datasheet analysis artefacts
+hardware/datasheets/*.png
+hardware/datasheets/*.txt
+hardware/datasheets/*.html
+
+# OS noise
+Thumbs.db
+.DS_Store
+*.log

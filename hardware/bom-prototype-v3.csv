@@ -1,0 +1,31 @@
+STT,Wave,Nhóm,Linh kiện,Model / Thông số,SL,Giá USD,Nơi mua / Ghi chú
+1,W1,SoC,Luckfox Pico Max,RV1106G3 256MB DDR / MIPI CSI / USB / SD,1,25,Shopee/AliExpress - chọn bản Max 256MB
+2,W1,Camera,SC3336 3MP MIPI,Mua kèm board để đúng connector,1,10,Mua cùng Luckfox để chắc khớp FPC
+3,W1,4G,Quectel EC200U-EU breakout,Cat-1 UART 3.3V + khe SIM nano + u.FL,1,14,Shopee/AliExpress - chọn bản EU (B1/3/5/7/8/20/28); UART 3.3V
+4,W1,MCU,STM32L0 Nucleo-32,L011K4 hoặc tương đương,1,12,Shopee
+5,W1,Nạp,ST-Link V2,,1,3,Shopee
+6,W2,Cảm biến,PIR AM312,3.3V 10-20uA,2,3,Shopee
+7,W2,IR,LED 850nm 1W,5mm hoặc star,4,2,Shopee
+8,W2,IR,MOSFET IRLZ44N,Logic level,5,2,Shopee
+9,W2,IR,Trở 10 ohm 1W,,10,1,Shopee
+10,W2,Thời gian,DS3231 module,RTC I2C,1,2,Shopee
+11,W2,Đo dòng,INA226 module,Shunt 0.05 ohm 1%,1,3,Shopee
+12,W2,Nhiệt,DS18B20,1x chống nước + 1x TO-92,2,3,Shopee
+13,W2,Lưu trữ,microSD 32GB,SanDisk Max Endurance,1,10,Shopee
+14,W2,Pin,LFP 3.2V 8Ah,Prismatic,1,15,Shopee/AliExpress
+15,W2,Pin,BMS 1S 3.2V 10A,,1,2,Shopee
+16,W2,Pin,Sạc LFP CN3058E,3.6V 500mA,1,2,Shopee
+17,W2,Nguồn,Boost 5V MT3608,3A,2,2,Shopee - cần bản 3A cho modem
+18,W2,Nguồn,Buck 3.3V MP1584EN,3A,2,2,Shopee
+19,W2,Nguồn,Load switch P-MOS AO3401,Hoặc module TPS22965,4,2,Shopee
+20,W2,4G,Antenna FPC 4G,u.FL + IPEX,1,3,Shopee
+21,W2,4G,SIM data 4G,Viettel/Vina nano,1,5,
+22,W2,Vỏ,Hộp IP65,200x120x75 trắng ABS,1,8,Shopee
+23,W2,Vỏ,Tấm nhôm tản nhiệt,100x60x3mm,1,3,Shopee
+24,W2,Vỏ,Thermal pad,20x20x2mm,2,2,Shopee
+25,W2,Vỏ,Van cân bằng áp,Gore M12,1,2,Shopee
+26,W2,Vỏ,Gói hút ẩm,5g,2,1,Shopee
+27,W2,Phụ,Dây và đầu nối,JST-XH + dupont + co nhiệt,1,8,Shopee
+28,W2,Phụ,Proto board,7x9cm,2,3,Shopee
+29,W2,Phụ,Sạc USB-C 5V 2A + cáp,1,5,Shopee
+30,W2,Phụ,Ốc M3 + standoff,1,3,Shopee
