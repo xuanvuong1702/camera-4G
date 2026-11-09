@@ -42,7 +42,8 @@ Camera ngoài trời, pin LFP 10 Ah, 4G, hồng ngoại, phát hiện chuyển �
 │   ├── 07-test-plan.md           # kế hoạch kiểm tra 8 giai đoạn
 │   ├── 08-bringup.md             # hướng dẫn cấp nguồn lần đầu
 │   ├── 09-modem-ec200u.md        # chọn & đấu modem
-│   └── 10-readiness-audit.md     # rà soát sẵn sàng sản xuất
+│   ├── 10-readiness-audit.md     # rà soát sẵn sàng sản xuất
+│   └── 11-cost-estimate.md       # dự tính chi phí lô 5 bộ
 ├── hardware/
 │   ├── POWER.md                  # thiết kế khối nguồn
 │   ├── wiring-v2-ipc.md          # kiến trúc & đấu dây
