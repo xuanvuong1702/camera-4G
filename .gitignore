@@ -24,3 +24,6 @@ hardware/datasheets/*.html
 Thumbs.db
 .DS_Store
 *.log
+
+*.lck
+~*.lck
