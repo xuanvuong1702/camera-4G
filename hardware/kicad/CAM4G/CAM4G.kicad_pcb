@@ -2716,7 +2716,7 @@
 			)
 		)
 	)
-	(footprint "Core1106:Core1106-SMT"
+	(footprint "Core1106-PCB:Core1106-SMT"
 		(layer "F.Cu")
 		(uuid "20e9df2e-7a6b-40c9-b80d-acf305539ad6")
 		(at 30 35)

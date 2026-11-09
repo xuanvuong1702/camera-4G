@@ -8013,7 +8013,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Core1106:Core1106-SMT"
+		(property "Footprint" "Core1106-PCB:Core1106-SMT"
 			(at 103.632 65.024 0)
 			(effects
 				(font
