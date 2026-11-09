@@ -32,19 +32,6 @@ for pos in anchors:
     via.SetNet(net)
     board.Add(via)
 
-# F.Cu VBAT zone (full board)
-z = pcbnew.ZONE(board)
-z.SetLayer(pcbnew.F_Cu)
-z.SetNet(net)
-z.SetLocalClearance(MM(0.15))
-z.SetMinThickness(MM(0.25))
-z.SetPadConnection(pcbnew.ZONE_CONNECTION_FULL)
-o = z.Outline()
-o.NewOutline()
-for x, y in [(1, 1), (99, 1), (99, 69), (1, 69)]:
-    o.Append(MM(x), MM(y))
-board.Add(z)
-
 # B.Cu VBAT zone around the boost converter
 z2 = pcbnew.ZONE(board)
 z2.SetLayer(pcbnew.B_Cu)

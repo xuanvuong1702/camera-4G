@@ -1,98 +1,24 @@
 ** Drc report for CAM4G.kicad_pcb **
-** Created on 2026-11-09T11:36:13 **
+** Created on 2026-11-09T12:09:06 **
 ** Report includes: Errors, Warnings, Exclusions **
 
-** Found 27 DRC violations **
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)
-    Local override; error
-    @(67.3700 mm, 57.8100 mm): Track [/SS_BOOST] on F.Cu, length 0.7017 mm
-    @(66.8700 mm, 57.8100 mm): Via [/VBAT] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1450 mm)
-    Local override; error
-    @(66.3700 mm, 57.8100 mm): Pad 8 [/BOOT_BOOST] of U2 on F.Cu
-    @(66.8700 mm, 57.8100 mm): Via [/VBAT] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)
-    Local override; error
-    @(66.3700 mm, 57.8100 mm): Track [/BOOT_BOOST] on F.Cu, length 0.7017 mm
-    @(66.8700 mm, 57.8100 mm): Via [/VBAT] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0990 mm)
-    Local override; error
-    @(67.3700 mm, 57.8100 mm): Pad 10 [/SS_BOOST] of U2 on F.Cu
-    @(67.9700 mm, 57.2100 mm): Pad 11 [/GND] of U2 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0990 mm)
-    Local override; error
-    @(65.3700 mm, 54.6100 mm): Pad 20 [/GND] of U2 on F.Cu
-    @(64.7700 mm, 55.2100 mm): Pad 1 [/VCC_BOOST] of U2 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(88.4000 mm, 44.7800 mm): Pad 3 [/INA_ALERT] of U4 on F.Cu
-    @(88.4000 mm, 45.2800 mm): Pad 4 [/I2C_SDA] of U4 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(88.4000 mm, 44.7800 mm): Pad 3 [/INA_ALERT] of U4 on F.Cu
-    @(88.4000 mm, 44.2800 mm): Pad 2 [/GND] of U4 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(88.4000 mm, 45.2800 mm): Pad 4 [/I2C_SDA] of U4 on F.Cu
-    @(88.4000 mm, 45.7800 mm): Pad 5 [/I2C_SCL] of U4 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(92.6000 mm, 45.2800 mm): Pad 7 [/GND] of U4 on F.Cu
-    @(92.6000 mm, 45.7800 mm): Pad 6 [/+3V3] of U4 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(92.6000 mm, 45.2800 mm): Pad 7 [/GND] of U4 on F.Cu
-    @(92.6000 mm, 44.7800 mm): Pad 8 [/VBAT] of U4 on F.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(92.6000 mm, 43.7800 mm): Pad 10 [/VBAT_BMS] of U4 on F.Cu
-    @(92.6000 mm, 44.2800 mm): Pad 9 [/VBAT] of U4 on F.Cu
-[track_width]: Track width (board setup constraints min width 0.1500 mm; actual 0.1200 mm)
-    Rule: netclass 'Default'; error
-    @(48.9554 mm, 56.9512 mm): Track [/VBUS_5V] on F.Cu, length 0.2001 mm
-[track_width]: Track width (board setup constraints min width 0.1500 mm; actual 0.1000 mm)
-    Rule: netclass 'Default'; error
-    @(48.8021 mm, 56.8217 mm): Track [/VBUS_5V] on F.Cu, length 0.0238 mm
-[track_width]: Track width (board setup constraints min width 0.1500 mm; actual 0.1000 mm)
-    Rule: netclass 'Default'; error
-    @(48.8259 mm, 56.8217 mm): Track [/VBUS_5V] on F.Cu, length 0.1831 mm
-[track_width]: Track width (board setup constraints min width 0.1500 mm; actual 0.1200 mm)
-    Rule: netclass 'Default'; error
-    @(48.1904 mm, 56.2100 mm): Track [/VBUS_5V] on F.Cu, length 0.8651 mm
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(66.5783 mm, 58.7200 mm): Via [/BOOT_BOOST] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(63.7439 mm, 51.8689 mm): Via [/COMP_BOOST] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(44.7866 mm, 59.9858 mm): Via [/ISET] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(53.3694 mm, 14.7444 mm): Via [/MCU_NRST] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(14.6061 mm, 3.6211 mm): Via [/LED_PWR_A] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(55.2560 mm, 56.9375 mm): Via [/LED_DONE_A] on F.Cu - B.Cu
+** Found 6 DRC violations **
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(5.5000 mm, 0.1800 mm): Reference field of L1
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
     @(0.0000 mm, 70.0000 mm): Segment on Edge.Cuts
     @(-0.0750 mm, 17.0000 mm): Reference field of J2
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(3.5000 mm, 12.0000 mm): Circle on Edge.Cuts
-    @(3.2750 mm, 13.2000 mm): Segment of J2 on F.Silkscreen
+    @(5.3000 mm, 12.5000 mm): Circle on Edge.Cuts
+    @(3.2750 mm, 13.9500 mm): Segment of J2 on F.Silkscreen
 [silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(3.5000 mm, 12.0000 mm): Circle on Edge.Cuts
+    @(5.3000 mm, 12.5000 mm): Circle on Edge.Cuts
     @(1.0150 mm, 20.8100 mm): Rectangle of J2 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge
-    Rule: board setup constraints silk; warning
-    @(0.0000 mm, 0.0000 mm): Segment on Edge.Cuts
-    @(5.5000 mm, 0.1800 mm): Reference field of L1
 [silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
     @(66.3700 mm, 56.2100 mm): Reference field of U2

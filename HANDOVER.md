@@ -128,3 +128,19 @@ Trạng thái sau sửa:
 Firmware:
 - Linux: **17/17 test pass** (thêm modem AT, camera, GPIO)
 - MCU: 6/6 test host, build ARM OK
+
+---
+
+## 9. Chốt sản xuất (v4 final)
+
+**DRC cuối: 0 unconnected, 0 short, 0 clearance, 0 track width.** Chỉ còn 4 lỗi silk_edge và 2 silk_over_copper (in lụa).
+
+Nguyên nhân 2 điểm COMP chưa nối suốt các vòng trước: **zone VBAT toàn board trên F.Cu bị export thành plane**, Freerouting bỏ qua net COMP. Đã bỏ zone trước khi route, route lại, thêm zone B.Cu sau.
+
+Đã sửa thêm:
+- Lỗ khoan dời (12,5) → (5,3; 12,5) để cách pad R21 > 0,2 mm
+- Pad U2 0,24 → 0,23 mm cho đủ clearance 0,15 ở pad góc
+- Netclass clearance 0,2 → 0,15; track 0,10/0,12 → 0,15
+- Gerber/BOM/CPL xuất lại; `gerber/CAM4G-fab.zip` 13 file
+
+Còn lại (thương mại): mã LCSC cho thụ động, model breakout EC200U, camera, pin, vỏ.
