@@ -9,7 +9,7 @@
 ## 1. Kiến trúc nguồn
 
 ```
-USB-C 5V ──► CN3058E (sạc LFP 1A) ──► VBAT ◄── BMS ◄── pin LFP 10 Ah
+USB-C 5V ──► CN3058E (sạc LFP 0,5A) ──► VBAT ◄── BMS ◄── pin LFP 10 Ah
                                         │
                                         ├──► TPS61088 boost ──► +5V_SYS (3 A)
                                         │        ├── Core1106 (1 A)
@@ -132,17 +132,17 @@ Nguồn: bảng "Output Voltage Setting, RSET" — hàng có VOUT 3,3 V dùng 26
 | A0, A1 | GND | địa chỉ 0x40 |
 | VBUS | VBAT | đo điện áp bus |
 
-Dòng tối đa 3 A → shunt 0,05 Ω cho 150 mV, công suất 0,45 W. Chọn trở 1 W.
+Dòng tối đa 5,56 A → shunt **0,01 Ω** cho 55,6 mV, công suất 0,31 W. Chọn **2512 1 W**. Dải INA226 ±81,92 mV → đo được ±8,19 A. Dòng ngủ 0,3 mA chỉ 3 µV, dưới offset chip → phải đo bằng đồng hồ ngoài.
 
 > Đo dòng ngủ 0,3 mA: 15 µV trên shunt — INA226 có LSB 2,5 µV nên đo được, nhưng cần calib và che chắn.
 
 ---
 
-## 6. CN3058E — sạc LFP 1 A
+## 6. CN3058E — sạc LFP 0,5 A
 
 | Linh kiện | Giá trị | Ghi chú |
 |---|---|---|
-| R10 (ISET) | **1,2 kΩ** | ICH = 1011 × 1,205 / 1200 ≈ 1,01 A |
+| R10 (ISET) | **2,4 kΩ** | ICH = 1011 × 1,205 / 2400 ≈ 0,51 A |
 | C13 | 10 µF | VIN |
 | C14 | 10 µF | BAT |
 | D1 + R11 | LED đỏ + 1 kΩ | CHRG |
@@ -150,7 +150,7 @@ Dòng tối đa 3 A → shunt 0,05 Ω cho 150 mV, công suất 0,45 W. Chọn tr
 | NTC + R13 | 10 kΩ NTC + 10 kΩ | TEMP (xem §7) |
 | FB | nối BAT | điện áp điều chỉnh mặc định 3,6 V |
 
-**Nhiệt:** tổn hao tuyến tính = (5 − 3,6) × 1 A = 1,4 W. Ở 45 °C môi trường, chip sẽ tự giảm dòng khi junction tới ~135 °C. Cần pad đồng lớn + 9 via thermal dưới pad.
+**Nhiệt:** tổn hao tuyến tính = (5 − 3,6) × 0,5 A = 0,7 W (trước đây 1,4 W ở 1 A). Ở 45 °C môi trường, chip sẽ tự giảm dòng khi junction tới ~135 °C. Cần pad đồng lớn + 9 via thermal dưới pad.
 
 ---
 

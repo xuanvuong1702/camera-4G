@@ -178,7 +178,7 @@ Với 720p + IR 3 m + ghi local, **ESP32-S3 là lựa chọn đúng cho prototyp
 | 2 | OV5640 + IR-CUT | Module day/night, 5 MP | $12 |
 | 3 | Quectel EC200U-EU breakout | Cat-1bis, B1/3/5/7/8/20/28 | $20 |
 | 4 | PIR AM312 | ~10–20 µA | $2 |
-| 5 | 2× LED 850 nm 1 W + MOSFET IRLZ44N + trở | Tầm 3 m | $4 |
+| 5 | 2× LED 850 nm 1 W + MOSFET AO3400A (SOT-23) + trở | Tầm 3 m | $4 |
 | 6 | DS3231 RTC | | $2 |
 | 7 | INA226 | Đo dòng từng trạng thái | $3 |
 | 8 | DS18B20 ×2 | Pin + SoC | $3 |

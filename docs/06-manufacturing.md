@@ -28,7 +28,7 @@ Tài liệu gửi xưởng cho lô mẫu 5 bộ.
 | Min trace | 0,15 mm (stub MIPI 0,1 mm) |
 | Min clearance | **0,14 mm** (JLCPCB min 0,127) |
 | Via | 0,45 mm / khoan 0,3 mm |
-| Lỗ khoan | (3,5; 23,2), (95,5), (5,65), (95,65) |
+| Lỗ khoan | **(4,0; 24,1)**, (95,5), (5,65), (95,65) |
 
 ### Stackup
 
@@ -49,7 +49,7 @@ B.Cu   tín hiệu + zone +5V_SYS
 | Cặp | Mục tiêu | Ghi chú |
 |---|---|---|
 | USB D+/D− | 90 Ω vi sai | ngắn, không kiểm soát chặt |
-| MIPI CLK/D0/D1 | 100 Ω vi sai | **chưa kiểm soát** — rủi ro nếu ảnh lỗi |
+| MIPI CLK/D0/D1 | 100 Ω vi sai | **chưa kiểm soát**; khi đặt JLCPCB chọn **Impedance Control**, ghi rõ cặp MIPI |
 
 ---
 
@@ -83,7 +83,7 @@ B.Cu   tín hiệu + zone +5V_SYS
 | Hạng mục | Yêu cầu |
 |---|---|
 | Pin | LFP 1S 10 Ah + BMS ≥ 10 A |
-| Sạc | CN3058E 1 A, cấm sạc khi T > 40 °C |
+| Sạc | CN3058E **0,5 A** (R10 = 2,4 kΩ), cấm sạc khi T > 40 °C |
 | Vận chuyển | UN38.3 + MSDS |
 | Lắp ráp | Đấu pin sau khi kiểm tra rail 5 V/3,3 V |
 

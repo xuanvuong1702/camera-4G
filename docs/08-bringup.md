@@ -38,6 +38,7 @@ Hướng dẫn cho lần cấp nguồn đầu tiên và 8 bước đưa board m�
 3. Kiểm tra: PA5 (SOC_EN) phải ở mức thấp sau reset.
 4. Nếu có USB-I2C: quét địa chỉ 0x30, đọc thanh ghi VERSION = 0x10.
 5. Đo dòng STOP: < 10 µA.
+6. **Dòng ngủ 0,3 mA không đo được bằng INA226** (3 µV trên shunt 0,01 Ω, dưới offset). Đo bằng nguồn có amper kế (Otii/µCurrent) hoặc điện trở cắm tạm.
 
 **Lỗi thường gặp:** I2C không thấy 0x30 → kiểm tra AF4 cho PA9/PA10, và điện trở kéo I2C (R8/R9 4,7 kΩ).
 

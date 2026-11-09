@@ -168,7 +168,7 @@ edge(W, H, 0, H)
 edge(0, H, 0, 0)
 
 # mounting holes as board cutouts
-for (mx, my) in [(3.5, 23.2), (W - 5, 5), (5, H - 5), (W - 5, H - 5)]:
+for (mx, my) in [(4.0, 24.1), (W - 5, 5), (5, H - 5), (W - 5, H - 5)]:
     c = pcbnew.PCB_SHAPE(board)
     c.SetShape(pcbnew.SHAPE_T_CIRCLE)
     c.SetCenter(V(MM(mx), MM(my)))

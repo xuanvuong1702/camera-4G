@@ -59,3 +59,19 @@
 - **MIPI chưa kiểm soát impedance 100 Ω**.
 - 10 silk_over_copper: xưởng tự cắt lụa, không ảnh hưởng.
 - Dòng ngủ 0,3 mA (15 µV trên shunt 0,01 Ω) vẫn dưới offset INA226 → **phải đo bằng đồng hồ ngoài**.
+
+
+---
+
+## 9. Kiểm tra bổ sung (vòng 39)
+
+| # | Vấn đề | Xử lý |
+|---|---|---|
+| 1 | **J2 chạm lỗ khoan** (3,5; 23,2) — viền lụa cách tâm 1,4 mm, thân J2 tới y = 21,9 | Dời lỗ sang **(4,0; 24,1)**; J2 vẫn nhô 0,775 mm ra mép board (đúng kiểu JST VH, vỏ cần khoét) |
+| 2 | **Hai zone B.Cu chồng nhau** (VBAT cục bộ và +5V toàn board, cùng priority 0) | Đặt **VBAT priority 1**, +5V priority 0; fill lại, DRC 0 short |
+| 3 | Stackup chưa khai báo | Đã thêm vào file PCB: F.Cu 0,035 / prepreg 0,1 / In1 0,035 / core 1,26 / In2 0,035 / prepreg 0,1 / B.Cu 0,035, ENIG |
+| 4 | Dòng ngủ không đo được bằng INA226 | Ghi rõ trong POWER.md và bring-up: đo bằng Otii/µCurrent |
+| 5 | Tài liệu lệch | POWER.md: shunt 0,01 Ω/55,6 mV; docs/01: AO3400A |
+| 6 | Sạc 1 A tỏa ~1,4 W trong vỏ kín | **Giảm còn 0,5 A**: R10 1,2 kΩ → **2,4 kΩ**, tổn hao ~0,7 W |
+| 7 | U3 symbol còn pin 9 (EP) | **Chưa sửa** — DLC không có EP; cần xóa pin 9 khỏi symbol (v6) |
+| 8 | MIPI/vòng boost vẫn autoroute | **Chưa sửa** — cần route tay + impedance control |

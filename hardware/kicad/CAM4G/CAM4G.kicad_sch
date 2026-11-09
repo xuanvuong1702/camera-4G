@@ -10160,7 +10160,7 @@
 		(dnp no)
 		(uuid "4a431380-c39b-456f-b432-a76845c4860e")
 		(property "Reference" "R10" (at 129.54 507.43000000000006 0) (effects (font (size 1.27 1.27))))
-		(property "Value" "1.2k" (at 129.54 509.93000000000006 0) (effects (font (size 1.27 1.27))))
+		(property "Value" "2.4k" (at 129.54 509.93000000000006 0) (effects (font (size 1.27 1.27))))
 		(property "Footprint" "Resistor_SMD:R_0603_1608Metric" (at 129.54 519.4300000000001 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(property "Datasheet" "" (at 129.54 519.4300000000001 0) (effects (font (size 1.27 1.27)) (hide yes)))
 		(pin "1" (uuid "685877b3-5da9-425e-987c-2809757e1871"))
